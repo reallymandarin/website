@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f5f0" />
+    <title>中文小故事 · 阅读与学习</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Really Mandarin 首页"><span class="brand-logo-frame"><img class="brand-logo" src="./logo-really-mandarin.png" alt="" /></span><span>Really Mandarin<small>READ · NOTICE · PRACTICE</small></span></a>
+      <div class="top-note"><span class="status-dot"></span> 15 stories per month</div>
+    </header>
+
+    <main class="app-shell">
+      <section class="reading-column" aria-label="故事阅读区">
+        <div class="story-heading">
+          <div class="story-picker-wrap"><label for="story-select">正在阅读</label><select id="story-select" aria-label="选择故事"></select><span class="select-chevron">⌄</span></div>
+          <div class="story-meta"><span class="meta-title" id="story-title"></span><span class="meta-divider"></span><span id="story-count"></span><span class="level-pill" id="story-level"></span></div>
+        </div>
+
+        <article class="reading-card chinese-card">
+          <div class="card-label"><span class="label-index">01</span><span>中文故事</span><span class="label-line"></span><button class="text-action" id="font-toggle" type="button">字号 <span>大</span></button></div>
+          <div class="story-text" id="story-chinese"></div>
+          <div class="reading-footer"><span>慢慢读，不着急</span><span class="progress-label" id="reading-progress">故事 01 / 10</span></div>
+        </article>
+
+        <article class="reading-card english-card">
+          <div class="card-label"><span class="label-index label-index-muted">02</span><span>English translation</span><span class="label-line"></span><button class="text-action" id="translation-toggle" type="button">隐藏译文</button></div>
+          <div class="translation-text" id="story-english"></div>
+        </article>
+        <footer class="page-footer"><span>用故事认识中文</span><span>TAKE YOUR TIME <span class="footer-spark">✳</span></span></footer>
+      </section>
+
+      <section class="study-column" aria-label="学习工作区">
+        <img class="study-illustration" src="./pic-story-01.jpg" alt="动物桥的自然景观" />
+        <div class="study-heading"><div><span class="eyebrow">STUDY DESK</span></div><span class="sparkle" aria-hidden="true">✳</span></div>
+        <div class="tabs" role="tablist" aria-label="学习内容">
+          <button class="tab active" role="tab" aria-selected="true" data-tab="vocabulary"><span>HSK Vocabulary</span></button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="grammar"><span>Language Points</span></button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="practice"><span>Exercises</span></button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="answers"><span>Answers</span></button>
+        </div>
+        <div class="study-card" id="study-panel" role="tabpanel" tabindex="0"></div>
+        <div class="study-bottom"><span class="study-tip"><span class="tip-icon">↗</span> 点击故事里的词语，也可以查看解释</span><button id="next-tab" class="next-button" type="button">继续学习 <span>→</span></button></div>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
