@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Story 05 October-吃掉代码的黑洞-The Black Hole That Eats Code</title>
+    <style>
+        * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            color-adjust: exact !important;
+            box-sizing: border-box;
+        }
+
+        @page { 
+            size: A4; 
+            margin: 15mm 12mm; 
+            background-color: #fdfbf7; 
+        }
+        
+        body { 
+            font-family: "PingFang SC", "Lantinghei SC", "Microsoft YaHei", "Arial", "KaiTi", "STKaiti", "楷体", serif; 
+            color: #333; 
+            margin: 0; 
+            padding: 0; 
+            background-color: #fdfbf7;
+        }
+        
+        .content-block { 
+            position: relative;
+            margin-bottom: 22px;
+            page-break-inside: auto !important;
+        }
+        
+        /* 顶部三栏布局 */
+        .top-header-table {
+            display: table;
+            width: 100%;
+            margin-bottom: 18px;
+            border-bottom: 2px solid #2c3e50;
+            padding-bottom: 12px;
+            page-break-inside: avoid;
+        }
+        
+        /* 左栏：Logo + 编号 */
+        .header-left {
+            display: table-cell;
+            width: 28%;
+            vertical-align: middle;
+            text-align: left;
+        }
+
+        .header-left .logo-img {
+            max-width: 220px;
+            height: auto;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .header-story-id {
+            font-family: "Arial", sans-serif;
+            font-size: 11pt;
+            font-weight: bold;
+            color: #000;
+            margin-top: 4px;
+        }
+        
+        /* 中栏：大标题 + 英文副标题 */
+        .header-center {
+            display: table-cell;
+            width: 44%;
+            vertical-align: middle;
+            text-align: center;
+        }
+        
+        h1 { 
+            font-size: 22pt; 
+            color: #2c3e50; 
+            margin: 0; 
+            font-family: "KaiTi", "STKaiti", "楷体", serif; 
+            line-height: 1.2;
+            font-weight: bold;
+        }
+        
+        .title-en { 
+            font-size: 11pt; 
+            color: #7f8c8d; 
+            font-style: italic; 
+            margin-top: 6px; 
+            font-family: "Georgia", "Times New Roman", serif; 
+        }
+
+        /* 右栏：本地配图 pic.jpg */
+        .header-right {
+            display: table-cell;
+            width: 28%;
+            vertical-align: middle;
+            text-align: right;
+        }
+
+        .header-right .topic-img {
+            width: 100%;
+            max-width: 210px;
+            height: auto;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            display: inline-block;
+            object-fit: cover;
+        }
+        
+        .content-wrapper { 
+            display: table; 
+            width: 100%; 
+            border-spacing: 15px 0; 
+            margin-top: 5px; 
+            page-break-inside: auto !important; 
+        }
+        
+        .left { 
+            display: table-cell; 
+            width: 62%; 
+            font-size: 15pt; 
+            line-height: 1.75; 
+            text-align: justify; 
+            border-right: 1px dashed #ccc; 
+            padding-right: 15px; 
+            font-family: "KaiTi", "STKaiti", "楷体", serif; 
+        }
+
+        .left p {
+            text-indent: 2em;
+            margin: 0 0 1em 0;
+        }
+        .left p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .right { 
+            display: table-cell; 
+            width: 38%; 
+            font-family: "Times New Roman", serif; 
+            font-size: 10.5pt; 
+            line-height: 1.5; 
+            color: #444; 
+            text-align: justify; 
+            padding-left: 15px; 
+        }
+
+        .right p {
+            text-indent: 2em;
+            margin: 0 0 1em 0;
+        }
+        .right p:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* 词汇高亮颜色样式 */
+        .hsk3-hl { background-color: #FFFF00 !important; color: black !important; padding: 0 2px; }
+        .hsk4-hl { background-color: #3399FF !important; color: white !important; padding: 0 2px; }
+        .hsk5-hl { background-color: #8B0000 !important; color: white !important; padding: 0 2px; }
+        
+        .en-hl { 
+            text-decoration: underline; 
+            text-decoration-color: #3399FF; 
+            text-underline-offset: 3px; 
+        }
+        
+        .grammar-hl { 
+            text-decoration: underline; 
+            text-decoration-color: #00008B; 
+            text-underline-offset: 4px; 
+            font-weight: bold; 
+        }
+        
+        h2 { 
+            color: #2c3e50; 
+            font-size: 15pt; 
+            margin-top: 18px; 
+            margin-bottom: 8px;
+            border-bottom: 2px solid #2c3e50; 
+            padding-bottom: 3px; 
+            font-family: "KaiTi", "STKaiti", "楷体", serif; 
+            page-break-after: avoid;
+        }
+        
+        h3 { 
+            display: inline-block; 
+            padding: 2px 8px; 
+            border-radius: 4px; 
+            font-size: 13pt; 
+            margin-top: 8px; 
+            margin-bottom: 5px; 
+            page-break-after: avoid;
+        }
+        
+        .new-tag {
+            background-color: #E74C3C !important;
+            color: #FFFFFF !important;
+            font-size: 9pt;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 3px;
+            margin-left: 6px;
+            vertical-align: middle;
+            font-family: "Arial", sans-serif;
+            text-transform: uppercase;
+        }
+        
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 5px; 
+            table-layout: fixed; 
+            page-break-inside: auto !important;
+        }
+        
+        tr {
+            page-break-inside: avoid !important;
+        }
+        
+        th, td { border: 1px solid #ccc; padding: 6px 8px; text-align: center; }
+        th { background-color: #f2f2f2 !important; font-weight: bold; font-size: 10.5pt; font-family: "Arial", sans-serif; }
+        .td-cn { font-size: 13.5pt; font-weight: bold; font-family: "KaiTi", "STKaiti", "楷体", serif; }
+        .td-py { font-size: 9.5pt; color: #555; font-family: "Arial", sans-serif; }
+        .td-en { font-size: 9.5pt; font-family: "Arial", sans-serif; }
+        
+        .grammar-item { 
+            margin-bottom: 10px; 
+            padding: 8px 0; 
+            background-color: transparent; 
+            border-left: none; 
+            font-family: "Arial", sans-serif; 
+            page-break-inside: auto !important;
+        }
+        
+        .example-box { margin-top: 4px; padding-left: 10px; border-left: 2px solid #ccc; page-break-inside: auto !important; }
+        .ex-cn { font-size: 13pt; color: #2c3e50; font-family: "KaiTi", "STKaiti", "楷体", serif; }
+        .ex-en { font-size: 10pt; color: #666; font-style: italic; font-family: "Times New Roman", serif; }
+        
+        .exercise-section { margin-top: 10px; font-family: "Arial", sans-serif; page-break-inside: auto !important; }
+        .question { font-size: 13pt; line-height: 1.5; font-family: "KaiTi", "STKaiti", "楷体", serif; margin-bottom: 6px; page-break-inside: avoid !important; }
+        .square { display: inline-block; width: 11pt; height: 11pt; border: 1px solid #333; margin-right: 5px; vertical-align: middle; }
+        .answer-line { border-bottom: 1px solid #333; display: block; width: 100%; height: 22px; margin-top: 3px; }
+        
+        .answer-key-box {
+            margin-top: 15px;
+            padding: 10px 12px;
+            background-color: #f0f4f8;
+            border: 1px solid #d0d7de;
+            border-radius: 5px;
+            page-break-inside: avoid;
+        }
+        .answer-key-title {
+            font-weight: bold;
+            font-size: 12pt;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-family: "KaiTi", "STKaiti", "楷体", serif;
+        }
+        .answer-key-text {
+            font-size: 11pt;
+            color: #444;
+            line-height: 1.5;
+            font-family: "KaiTi", "STKaiti", "楷体", serif;
+        }
+    </style>
+</head>
+<body>
+
+<div class="content-block">
+    <!-- 顶部布局：左侧 Logo 与编号，中间标题，右侧 pic.jpg -->
+    <div class="top-header-table">
+        <div class="header-left">
+            <img class="logo-img" src="logo.png" alt="Logo">
+            <div class="header-story-id">Story 05 October</div>
+        </div>
+        <div class="header-center">
+            <h1>吃掉代码的黑洞</h1>
+            <div class="title-en">The Black Hole That Eats Code</div>
+        </div>
+        <div class="header-right">
+            <img class="topic-img" src="pic.jpg" alt="Header Picture">
+        </div>
+    </div>
+
+    <!-- 正文双语对照 -->
+    <div class="content-wrapper">
+        <div class="left">
+            <p>2024年<span class="hsk3-hl">夏天</span>，乌克兰程序员奥列格（Oleg）因为长期加班，身体出现了<span class="hsk4-hl">严重</span>的<span class="hsk3-hl">健康</span>问题。虽然医生告诉他一定要注意休息，但他知道自己<span class="grammar-hl"><span class="hsk4-hl">一</span></span>开始写起代码<span class="grammar-hl">就</span>会忘记时间。为了让自己<span class="hsk4-hl">及时</span>休息，奥列格写了一<span class="hsk3-hl">段</span>特别的小代码：当你工作<span class="hsk4-hl">超过</span>50分钟时，屏幕的边上就会出现一个小小的黑洞。这个时候如果你还不休息，黑洞就会越来越大，<span class="hsk4-hl">接着</span>，它就开始“吃掉”屏幕上的代码！如果你真的不休息，<span class="hsk5-hl">整个</span>代码都会被“黑洞”吃完！第一次测试时，奥列格看着代码一点点被黑洞吃掉，<span class="hsk3-hl">心里</span><span class="hsk4-hl">既</span>紧张又好笑。他说，好吧，我现在就休息！他离开了椅子，走一走。10分钟后他回到电脑前，黑洞不见了，他之前写的代码也在这里。</p>
+            <p>后来，奥列格把这段代码<span class="hsk5-hl">分享</span>到网上，成千上万的程序员<span class="hsk5-hl">下载</span>了它。一位德国<span class="hsk5-hl">工程师</span>留言说：“看到黑洞变大，我就只能去休息了，这个东西比我女朋友的提醒更<span class="hsk3-hl">有用</span>！”奥列格非常开心。他用这段小代码让自己保持健康，<span class="grammar-hl">同时</span>也提醒了大家：工作很<span class="hsk3-hl">重要</span>，身体更重要。</p>
+        </div>
+        <div class="right">
+            <p>In the <span class="en-hl">summer</span> of 2024, Ukrainian programmer Oleg experienced <span class="en-hl">severe</span> <span class="en-hl">health</span> issues due to working overtime for a long time. Although the doctor told him he must rest, he knew that <span class="grammar-hl">as soon as</span> he started writing code, he would forget the time. In order to rest in a <span class="en-hl">timely</span> manner, Oleg wrote a special <span class="en-hl">snippet</span> of code: when you work for <span class="en-hl">more than</span> 50 minutes, a small black hole appears at the edge of the screen. If you still don't rest at this time, the black hole gets bigger and bigger, and <span class="en-hl">then</span> it starts "eating" the code on the screen! If you really don't rest, the <span class="en-hl">whole</span> code will be eaten up by the "black hole"! During the first test, Oleg watched the code being eaten away by the black hole bit by bit, feeling <span class="en-hl">both</span> nervous and amused in his <span class="en-hl">heart</span>. He said, okay, I will rest now! He left his chair and took a walk. 10 minutes later, when he returned to the computer, the black hole was gone, and the code he wrote earlier was still there.</p>
+            <p>Later, Oleg <span class="en-hl">shared</span> this code online, and tens of thousands of programmers <span class="en-hl">downloaded</span> it. A German <span class="en-hl">engineer</span> commented: "Seeing the black hole get bigger, I can only go rest. This thing is more <span class="en-hl">useful</span> than my girlfriend's reminders!" Oleg was very happy. He used this small code to keep himself healthy, while <span class="grammar-hl">at the same time</span> reminding everyone: work is <span class="en-hl">important</span>, but health is even more important.</p>
+        </div>
+    </div>
+</div>
+
+<!-- 词汇板块 -->
+<div class="content-block">
+    <h2>重点词语 (Key Vocabulary)</h2>
+    <div style="margin-top: 8px; margin-bottom: 4px; page-break-after: avoid;">
+        <h3 class="hsk3-hl" style="font-family: 'Arial'; margin: 0;">HSK 3</h3>
+        <span class="new-tag">NEW HSK 3.0</span>
+    </div>
+    <table>
+        <tr><th>中文</th><th>拼音</th><th>英文</th><th>中文</th><th>拼音</th><th>英文</th></tr>
+        <tr><td class="td-cn">夏天</td><td class="td-py">xiàtiān</td><td class="td-en">summer</td><td class="td-cn">段</td><td class="td-py">duàn</td><td class="td-en">section / segment / paragraph</td></tr>
+        <tr><td class="td-cn">有用</td><td class="td-py">yǒuyòng</td><td class="td-en">useful</td><td class="td-cn">心里</td><td class="td-py">xīnlǐ</td><td class="td-en">in one's heart / mind</td></tr>
+        <tr><td class="td-cn">健康</td><td class="td-py">jiànkāng</td><td class="td-en">health / healthy</td><td class="td-cn">重要</td><td class="td-py">zhòngyào</td><td class="td-en">important</td></tr>
+    </table>
+
+    <h3 class="hsk4-hl" style="font-family: 'Arial';">HSK 4</h3>
+    <table>
+        <tr><th>中文</th><th>拼音</th><th>英文</th><th>中文</th><th>拼音</th><th>英文</th></tr>
+        <tr><td class="td-cn">严重</td><td class="td-py">yánzhòng</td><td class="td-en">serious / severe</td><td class="td-cn">及时</td><td class="td-py">jíshí</td><td class="td-en">in time / timely</td></tr>
+        <tr><td class="td-cn">接着</td><td class="td-py">jiēzhe</td><td class="td-en">then / next / proceed</td><td class="td-cn">超过</td><td class="td-py">chāoguò</td><td class="td-en">to exceed / surpass</td></tr>
+        <tr><td class="td-cn">既</td><td class="td-py">jì</td><td class="td-en">both (既...又...)</td><td class="td-cn">-</td><td class="td-py">-</td><td class="td-en">-</td></tr>
+    </table>
+
+    <h3 class="hsk5-hl" style="font-family: 'Arial';">HSK 5</h3>
+    <table>
+        <tr><th>中文</th><th>拼音</th><th>英文</th><th>中文</th><th>拼音</th><th>英文</th></tr>
+        <tr><td class="td-cn">分享</td><td class="td-py">fēnxiǎng</td><td class="td-en">to share</td><td class="td-cn">下载</td><td class="td-py">xiàzǎi</td><td class="td-en">to download</td></tr>
+        <tr><td class="td-cn">工程师</td><td class="td-py">gōngchéngshī</td><td class="td-en">engineer</td><td class="td-cn">整个</td><td class="td-py">zhěnggè</td><td class="td-en">whole / entire</td></tr>
+    </table>
+</div>
+
+<!-- 语言点板块 -->
+<div class="content-block">
+    <h2>语言点 (Language Points)</h2>
+    <div class="grammar-item">
+        <strong>同时 (at the same time... - HSK4-11)</strong><br>
+        <span style="font-size: 10.5pt; color: #555;">连词/副词，表示两件事同时发生，或表示进一步补充。 Conjunction/adverb indicating that two actions occur at the same time, or adding further information.</span>
+        <div class="example-box">
+            <div class="ex-cn">例①：他用这段小代码让自己保持健康，同时也提醒了大家：工作很重要，身体更重要。</div>
+            <div class="ex-en">He used this small code to stay healthy, while at the same time reminding everyone: work is important, but health is even more important.</div>
+            <div class="ex-cn" style="margin-top: 3px;">例②：买了票以后你的手机会收到信息，同时也会收到邮件。</div>
+            <div class="ex-en">After buying the ticket, your phone will receive a text message, and at the same time, you will also receive an email.</div>
+        </div>
+    </div>
+
+    <div class="grammar-item">
+        <strong>一......就...... (as soon as / every time... - HSK4-20)</strong><br>
+        <span style="font-size: 10.5pt; color: #555;">关联词，表示动作紧接着发生，或某种条件下一旦做某事就会有相应结果。 Sentence pattern indicating that one action immediately follows another, or "whenever... then...".</span>
+        <div class="example-box">
+            <div class="ex-cn">例①：他知道他自己一开始写起代码就会忘记时间。</div>
+            <div class="ex-en">He knew that as soon as he started writing code, he would forget the time.</div>
+            <div class="ex-cn" style="margin-top: 3px;">例②：他一见到朋友就不停地聊天。</div>
+            <div class="ex-en">Every time he sees his friends, he chats non-stop.</div>
+        </div>
+    </div>
+</div>
+
+<!-- 练习题板块 -->
+<div class="content-block">
+    <h2>练习 (Exercises)</h2>
+    <div class="exercise-section">
+        <div class="question">1）奥列格为什么写了一段特别的小代码？</div>
+        <div style="margin-left: 15px;">
+            <div class="question"><span class="square"></span>A. 因为他想学习新的编程方法</div>
+            <div class="question"><span class="square"></span>B. 因为他想让电脑运行得更快</div>
+            <div class="question"><span class="square"></span>C. 因为他想帮助其他人写代码</div>
+            <div class="question"><span class="square"></span>D. 因为他经常加班，身体出现了严重的健康问题</div>
+        </div>
+
+        <div class="question">2）当奥列格工作超过50分钟时，电脑屏幕上会出现什么？</div>
+        <div style="margin-left: 15px;">
+            <div class="question"><span class="square"></span>A. 一个小小的黑洞</div>
+            <div class="question"><span class="square"></span>B. 一只小动物</div>
+            <div class="question"><span class="square"></span>C. 一个休息提醒</div>
+            <div class="question"><span class="square"></span>D. 一张新的图片</div>
+        </div>
+
+        <div class="question">3）当黑洞开始变大时，如果奥列格还不休息，会发生什么？</div>
+        <div style="margin-left: 15px;">
+            <div class="question"><span class="square"></span>A. 电脑会自动关机</div>
+            <div class="question"><span class="square"></span>B. 屏幕上的代码会被黑洞吃掉</div>
+            <div class="question"><span class="square"></span>C. 电脑会发出很大的声音</div>
+            <div class="question"><span class="square"></span>D. 所有文件都会自动保存</div>
+        </div>
+
+        <div class="question" style="margin-top:12px; border-bottom: 1px solid #ccc; width: fit-content;"><strong>简答题 (Short Answer)</strong></div>
+        <div class="question">4）奥列格休息10分钟后，回到电脑前发现了什么？</div>
+        <div class="answer-line"></div>
+        <div class="question">5）德国工程师为什么说这个小程序很有用？</div>
+        <div class="answer-line"></div>
+    </div>
+
+    <div class="answer-key-box">
+        <div class="answer-key-title">参考答案 (Answer Key):</div>
+        <div class="answer-key-text">
+            1. D&nbsp;&nbsp;&nbsp;&nbsp; 2. A&nbsp;&nbsp;&nbsp;&nbsp; 3. B<br>
+            4. 黑洞不见了，他之前写的代码也还在。<br>
+            5. 因为黑洞变大时，他就会去休息。
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
