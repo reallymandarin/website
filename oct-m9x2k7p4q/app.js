@@ -20,9 +20,8 @@ const grid = document.querySelector(".story-grid");
 const categoryColors = { "环球": "#aca193", "科学": "#5f84a9", "文化": "#8d5877", "人物": "#d89fa4", "生活": "#aa94c2", "历史": "#a4be9a" };
 grid.innerHTML = stories.map(([titleZh, titleEn, words, themeZh, themeEn], index) => {
   const number = String(index + 1).padStart(2, "0");
-  const folderTitle = titleZh.replaceAll("/", "／");
   const color = categoryColors[themeZh];
-  return `<a class="story-card" href="./${number}${folderTitle}/${number}.html" target="_blank" rel="noopener noreferrer">
+  return `<a class="story-card" href="./${number}.html" target="_blank" rel="noopener noreferrer">
     <img src="./PIC${number}.jpg" alt="${titleEn}" loading="lazy">
     <div class="card-caption" style="--category-color:${color}">
       <div class="category-badge">

@@ -32,8 +32,8 @@ body { margin: 0; min-width: 320px; }
 .site-title { display: flex; align-items: baseline; justify-content: center; gap: 12px; font-family: Arial, "KaiTi", "STKaiti", "楷体", sans-serif; font-size: clamp(16px, 2vw, 22px); font-weight: 600; letter-spacing: .015em; text-align: center; white-space: nowrap; }
 .site-title-chinese { font-family: "KaiTi", "STKaiti", "楷体", serif; font-size: 1.1em; font-weight: 500; letter-spacing: .1em; }
 .site-title-english { font-size: .9em; font-weight: 400; }
-.club-link { justify-self: end; display: inline-flex; align-items: center; justify-content: center; min-height: 42px; padding: 0 18px; border-radius: 10px; background: #ec3987; color: white; font: 600 14px Arial, sans-serif; letter-spacing: .02em; text-decoration: none; white-space: nowrap; box-shadow: 0 5px 14px rgb(236 57 135 / 20%); }
-.club-link:hover, .join-button:hover { background: #d92c76; }
+.top-note { justify-self: end; color: #55584e; font: 600 14px Arial, sans-serif; letter-spacing: .02em; white-space: nowrap; }
+.join-button:hover { background: #d92c76; }
 .story-grid {
   width: min(100% - 64px, 1080px);
   margin: 0 auto;
@@ -44,7 +44,7 @@ body { margin: 0; min-width: 320px; }
 }
 .story-card {
   display: grid;
-  grid-template-rows: minmax(0, 1fr) 74px;
+  grid-template-rows: minmax(0, 1fr) 75px;
   aspect-ratio: 700 / 450;
   min-width: 0;
   overflow: hidden;
@@ -90,10 +90,10 @@ body { margin: 0; min-width: 320px; }
   .topbar { padding: 0 20px; grid-template-columns: 160px minmax(0, 1fr) auto; gap: 12px; }
   .logo-link { width: 156px; height: 52px; }
   .site-title { gap: 8px; font-size: clamp(11px, 1.5vw, 16px); }
-  .club-link { font-size: 12px; }
+  .top-note { font-size: 12px; }
   .story-grid { width: min(100% - 40px, 720px); grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
   .intro-section { width: min(100% - 40px, 720px); padding: 22px; gap: 24px; }
-  .story-card { grid-template-rows: minmax(0, 1fr) 74px; }
+  .story-card { grid-template-rows: minmax(0, 1fr) 75px; }
   .card-caption { grid-template-columns: 80px minmax(0, 1fr); }
   .caption-copy { padding: 6px 7px; }
   .word-count, .hsk-level { font-size: 10px; }
@@ -104,7 +104,7 @@ body { margin: 0; min-width: 320px; }
   .site-title { gap: 6px; font-size: clamp(9px, 2.6vw, 13px); white-space: nowrap; }
   .site-title-chinese { font-size: 1.1em; }
   .site-title-english { font-size: .9em; }
-  .club-link { font-size: clamp(8px, 2.1vw, 11px); }
+  .top-note { font-size: clamp(8px, 2.1vw, 11px); }
   .story-grid { width: min(100% - 32px, 430px); grid-template-columns: 1fr; gap: 18px; padding-top: 20px; }
   .intro-section { width: min(100% - 32px, 430px); grid-template-columns: 1fr; padding: 17px; gap: 22px; margin-bottom: 38px; }
   .intro-copy h1 { font-size: 34px; }
@@ -115,13 +115,13 @@ body { margin: 0; min-width: 320px; }
   .teacher-card { order: -1; }
   .teacher-card img { aspect-ratio: 1.2 / 1; }
   .teacher-card figcaption { font-size: 15px; }
-  .story-card { grid-template-rows: minmax(0, 1fr) 74px; }
+  .story-card { grid-template-rows: minmax(0, 1fr) 75px; }
   .story-title { font-size: 16px; }
 }
 @media (max-width: 390px) {
   .topbar { height: 60px; grid-template-columns: 76px minmax(0, 1fr) auto; padding: 0 10px; gap: 6px; }
   .logo-link { width: 76px; height: 30px; }
   .site-title { gap: 4px; font-size: 8px; }
-  .club-link { min-height: 34px; padding: 0 8px; font-size: 8px; }
+  .top-note { font-size: 8px; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; } }
