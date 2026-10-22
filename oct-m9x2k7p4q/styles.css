@@ -1,0 +1,127 @@
+:root {
+  color-scheme: light;
+  --paper: #f7f5ef;
+  --ink: #252820;
+  --muted: #77796f;
+  --line: #deddd5;
+  font-family: "KaiTi", "STKaiti", "楷体", Arial, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: 82px; }
+body { margin: 0; min-width: 320px; }
+.topbar {
+  position: sticky;
+  z-index: 10;
+  top: 0;
+  height: 82px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 20px;
+  padding: 0 clamp(20px, 5.5vw, 88px);
+  background: rgb(250 249 245 / 96%);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(12px);
+}
+.logo-link { display: inline-flex; align-items: center; justify-self: start; width: 180px; height: 60px; }
+.logo-link img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.site-title { display: flex; align-items: baseline; justify-content: center; gap: 12px; font-family: Arial, "KaiTi", "STKaiti", "楷体", sans-serif; font-size: clamp(16px, 2vw, 22px); font-weight: 600; letter-spacing: .015em; text-align: center; white-space: nowrap; }
+.site-title-chinese { font-family: "KaiTi", "STKaiti", "楷体", serif; font-size: 1.1em; font-weight: 500; letter-spacing: .1em; }
+.site-title-english { font-size: .9em; font-weight: 400; }
+.club-link { justify-self: end; display: inline-flex; align-items: center; justify-content: center; min-height: 42px; padding: 0 18px; border-radius: 10px; background: #ec3987; color: white; font: 600 14px Arial, sans-serif; letter-spacing: .02em; text-decoration: none; white-space: nowrap; box-shadow: 0 5px 14px rgb(236 57 135 / 20%); }
+.club-link:hover, .join-button:hover { background: #d92c76; }
+.story-grid {
+  width: min(100% - 64px, 1080px);
+  margin: 0 auto;
+  padding: 34px 0 64px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+}
+.story-card {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) 74px;
+  aspect-ratio: 700 / 450;
+  min-width: 0;
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+  background: #fffefa;
+  border: 1px solid #e4e1d8;
+  box-shadow: 0 4px 14px rgb(35 38 30 / 5%);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.story-card:hover, .story-card:focus-visible { transform: translateY(-3px); box-shadow: 0 10px 24px rgb(35 38 30 / 12%); outline: none; }
+.story-card > img { display: block; width: 100%; height: 100%; min-height: 0; object-fit: cover; background: #e9e6dd; }
+.card-caption { min-width: 0; display: grid; grid-template-columns: 86px minmax(0, 1fr); align-items: stretch; column-gap: 0; padding: 0; border-top: 1px solid #eeece5; }
+.category-badge { display: grid; min-width: 0; grid-template-columns: 30px minmax(0, 1fr); align-items: center; justify-items: center; gap: 3px; padding: 4px 3px; background: var(--category-color); color: #fff; text-align: center; }
+.story-number { position: relative; left: 4px; color: #fff; font: 19px/1 Georgia, "Times New Roman", serif; }
+.category-copy { display: grid; min-width: 0; gap: 3px; }
+.category-name { overflow: hidden; max-width: 100%; font-size: 12px; line-height: 1.2; white-space: nowrap; }
+.category-name-en { overflow: hidden; max-width: 100%; font: 10px/1.15 Arial, sans-serif; text-overflow: ellipsis; white-space: nowrap; }
+.caption-copy { display: grid; min-width: 0; align-content: center; gap: 5px; padding: 7px 10px; line-height: 1.2; }
+.title-row, .english-row { display: flex; min-width: 0; align-items: baseline; justify-content: space-between; gap: 8px; }
+.story-title { overflow: hidden; min-width: 0; color: #202020; font-family: "KaiTi", "STKaiti", "楷体", serif; font-size: clamp(15px, 1.4vw, 18px); font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+.story-title-en { overflow: hidden; min-width: 0; color: #202020; font: 12px/1.25 Arial, sans-serif; text-overflow: ellipsis; white-space: nowrap; }
+.word-count, .hsk-level { flex: 0 0 auto; color: #555; font: 11px/1.2 Arial, "KaiTi", "STKaiti", "楷体", sans-serif; white-space: nowrap; }
+.han { font-family: "KaiTi", "STKaiti", "楷体", serif; }
+.intro-section { width: min(100% - 64px, 1080px); margin: 0 auto 72px; padding: 26px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .96fr); align-items: center; gap: 38px; background: #fffdf8; border: 1px solid #f0eae4; border-radius: 22px; }
+.intro-copy { min-width: 0; }
+.intro-badge { display: inline-flex; align-items: center; gap: 8px; padding: 5px 12px; border-radius: 20px; background: #fff0aa; color: #a64e3f; font: 700 10px Arial, sans-serif; letter-spacing: .08em; }
+.intro-badge span { width: 7px; height: 7px; border-radius: 50%; background: #ec3987; }
+.intro-copy h1 { margin: 18px 0 24px; color: #202239; font: 700 clamp(30px, 4vw, 46px)/1.05 Georgia, "Times New Roman", serif; letter-spacing: -.035em; }
+.intro-copy h1 em { color: #ec3987; font-style: normal; }
+.intro-lead { margin: 0 0 13px; color: #32364b; font: 17px/1.65 Arial, sans-serif; }
+.intro-description { margin: 0 0 24px; color: #53566a; font: 14px/1.7 Arial, sans-serif; }
+.intro-benefits { display: grid; gap: 10px; margin: 0 0 28px; padding: 0; list-style: none; color: #36394b; font: 13px/1.45 Arial, sans-serif; }
+.intro-benefits li { position: relative; padding-left: 25px; }
+.intro-benefits li::before { content: "✓"; position: absolute; left: 0; top: 0; display: grid; width: 16px; height: 16px; place-items: center; border-radius: 50%; background: #fff0f5; color: #ec3987; font-weight: 700; }
+.intro-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.join-button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 17px; border-radius: 10px; font: 600 12px Arial, sans-serif; text-decoration: none; white-space: nowrap; }
+.join-button { background: #ec3987; color: #fff; box-shadow: 0 5px 14px rgb(236 57 135 / 20%); }
+.teacher-card { margin: 0; padding: 12px 12px 20px; border-radius: 18px; background: #fff1f4; text-align: center; }
+.teacher-card img { display: block; width: 100%; aspect-ratio: 1.12 / 1; object-fit: cover; object-position: center 38%; border-radius: 12px; box-shadow: 0 5px 14px rgb(35 38 30 / 13%); }
+.teacher-card figcaption { margin: 17px 8px 0; color: #46455a; font: italic 17px/1.45 Georgia, "Times New Roman", serif; }
+@media (max-width: 900px) {
+  .topbar { padding: 0 20px; grid-template-columns: 160px minmax(0, 1fr) auto; gap: 12px; }
+  .logo-link { width: 156px; height: 52px; }
+  .site-title { gap: 8px; font-size: clamp(11px, 1.5vw, 16px); }
+  .club-link { font-size: 12px; }
+  .story-grid { width: min(100% - 40px, 720px); grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+  .intro-section { width: min(100% - 40px, 720px); padding: 22px; gap: 24px; }
+  .story-card { grid-template-rows: minmax(0, 1fr) 74px; }
+  .card-caption { grid-template-columns: 80px minmax(0, 1fr); }
+  .caption-copy { padding: 6px 7px; }
+  .word-count, .hsk-level { font-size: 10px; }
+}
+@media (max-width: 560px) {
+  .topbar { height: 64px; padding: 0 16px; grid-template-columns: 98px minmax(0, 1fr) auto; gap: 8px; }
+  .logo-link { width: 98px; height: 34px; }
+  .site-title { gap: 6px; font-size: clamp(9px, 2.6vw, 13px); white-space: nowrap; }
+  .site-title-chinese { font-size: 1.1em; }
+  .site-title-english { font-size: .9em; }
+  .club-link { font-size: clamp(8px, 2.1vw, 11px); }
+  .story-grid { width: min(100% - 32px, 430px); grid-template-columns: 1fr; gap: 18px; padding-top: 20px; }
+  .intro-section { width: min(100% - 32px, 430px); grid-template-columns: 1fr; padding: 17px; gap: 22px; margin-bottom: 38px; }
+  .intro-copy h1 { font-size: 34px; }
+  .intro-lead { font-size: 15px; }
+  .intro-description { font-size: 13px; }
+  .intro-benefits { font-size: 12px; }
+  .join-button { min-height: 42px; padding: 0 13px; font-size: 11px; }
+  .teacher-card { order: -1; }
+  .teacher-card img { aspect-ratio: 1.2 / 1; }
+  .teacher-card figcaption { font-size: 15px; }
+  .story-card { grid-template-rows: minmax(0, 1fr) 74px; }
+  .story-title { font-size: 16px; }
+}
+@media (max-width: 390px) {
+  .topbar { height: 60px; grid-template-columns: 76px minmax(0, 1fr) auto; padding: 0 10px; gap: 6px; }
+  .logo-link { width: 76px; height: 30px; }
+  .site-title { gap: 4px; font-size: 8px; }
+  .club-link { min-height: 34px; padding: 0 8px; font-size: 8px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; } }
