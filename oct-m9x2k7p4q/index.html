@@ -5,13 +5,254 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f7f5ef">
   <title>Mandarin Reading Club (October) · 中文阅读（十月）</title>
-  <link rel="stylesheet" href="./styles1.css">
+  <style>
+:root {
+  color-scheme: light;
+  --paper: #f7f5ef;
+  --ink: #252820;
+  --muted: #77796f;
+  --line: #deddd5;
+  font-family: "KaiTi", "STKaiti", "楷体", Arial, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: 82px; }
+body { margin: 0; min-width: 320px; }
+.topbar {
+  position: sticky;
+  z-index: 10;
+  top: 0;
+  height: 82px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 20px;
+  padding: 0 clamp(20px, 5.5vw, 88px);
+  background: rgb(250 249 245 / 96%);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(12px);
+}
+.logo-link { display: inline-flex; align-items: center; justify-self: start; width: 180px; height: 60px; }
+.logo-link img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.site-title { display: flex; align-items: baseline; justify-content: center; gap: 12px; font-family: Arial, "KaiTi", "STKaiti", "楷体", sans-serif; font-size: clamp(16px, 2vw, 22px); font-weight: 600; letter-spacing: .015em; text-align: center; white-space: nowrap; }
+.site-title-chinese { font-family: "KaiTi", "STKaiti", "楷体", serif; font-size: 1.1em; font-weight: 500; letter-spacing: .1em; }
+.site-title-english { font-size: .9em; font-weight: 400; }
+.top-note { justify-self: end; color: #55584e; font: 600 14px Arial, sans-serif; letter-spacing: .02em; white-space: nowrap; }
+.join-button:hover { background: #d92c76; }
+.story-grid {
+  width: min(100% - 64px, 1080px);
+  margin: 0 auto;
+  padding: 34px 0 64px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+}
+.story-card {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) 75px;
+  aspect-ratio: 700 / 450;
+  min-width: 0;
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+  background: #fffefa;
+  border: 1px solid #e4e1d8;
+  box-shadow: 0 4px 14px rgb(35 38 30 / 5%);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.story-card:hover, .story-card:focus-visible { transform: translateY(-3px); box-shadow: 0 10px 24px rgb(35 38 30 / 12%); outline: none; }
+.story-card > img { display: block; width: 100%; height: 100%; min-height: 0; object-fit: cover; background: #e9e6dd; }
+.card-caption { min-width: 0; display: grid; grid-template-columns: 86px minmax(0, 1fr); align-items: stretch; column-gap: 0; padding: 0; border-top: 1px solid #eeece5; }
+.category-badge { display: grid; min-width: 0; grid-template-columns: 30px minmax(0, 1fr); align-items: center; justify-items: center; gap: 3px; padding: 4px 3px; background: var(--category-color); color: #fff; text-align: center; }
+.story-number { position: relative; left: 4px; color: #fff; font: 19px/1 Georgia, "Times New Roman", serif; }
+.category-copy { display: grid; min-width: 0; gap: 3px; }
+.category-name { overflow: hidden; max-width: 100%; font-size: 12px; line-height: 1.2; white-space: nowrap; }
+.category-name-en { overflow: hidden; max-width: 100%; font: 10px/1.15 Arial, sans-serif; text-overflow: ellipsis; white-space: nowrap; }
+.caption-copy { display: grid; min-width: 0; align-content: center; gap: 5px; padding: 7px 10px; line-height: 1.2; }
+.title-row, .english-row { display: flex; min-width: 0; align-items: baseline; justify-content: space-between; gap: 8px; }
+.story-title { overflow: hidden; min-width: 0; color: #202020; font-family: "KaiTi", "STKaiti", "楷体", serif; font-size: clamp(15px, 1.4vw, 18px); font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+.story-title-en { overflow: hidden; min-width: 0; color: #202020; font: 12px/1.25 Arial, sans-serif; text-overflow: ellipsis; white-space: nowrap; }
+.word-count, .hsk-level { flex: 0 0 auto; color: #555; font: 11px/1.2 Arial, "KaiTi", "STKaiti", "楷体", sans-serif; white-space: nowrap; }
+.han { font-family: "KaiTi", "STKaiti", "楷体", serif; }
+.intro-section { width: min(100% - 64px, 1080px); margin: 0 auto 72px; padding: 26px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .96fr); align-items: center; gap: 38px; background: #fffdf8; border: 1px solid #f0eae4; border-radius: 22px; }
+.intro-copy { min-width: 0; }
+.intro-badge { display: inline-flex; align-items: center; gap: 8px; padding: 5px 12px; border-radius: 20px; background: #fff0aa; color: #a64e3f; font: 700 10px Arial, sans-serif; letter-spacing: .08em; }
+.intro-badge span { width: 7px; height: 7px; border-radius: 50%; background: #ec3987; }
+.intro-copy h1 { margin: 18px 0 24px; color: #202239; font: 700 clamp(30px, 4vw, 46px)/1.05 Georgia, "Times New Roman", serif; letter-spacing: -.035em; }
+.intro-copy h1 em { color: #ec3987; font-style: normal; }
+.intro-lead { margin: 0 0 13px; color: #32364b; font: 17px/1.65 Arial, sans-serif; }
+.intro-description { margin: 0 0 24px; color: #53566a; font: 14px/1.7 Arial, sans-serif; }
+.intro-benefits { display: grid; gap: 10px; margin: 0 0 28px; padding: 0; list-style: none; color: #36394b; font: 13px/1.45 Arial, sans-serif; }
+.intro-benefits li { position: relative; padding-left: 25px; }
+.intro-benefits li::before { content: "✓"; position: absolute; left: 0; top: 0; display: grid; width: 16px; height: 16px; place-items: center; border-radius: 50%; background: #fff0f5; color: #ec3987; font-weight: 700; }
+.intro-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.join-button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 17px; border-radius: 10px; font: 600 12px Arial, sans-serif; text-decoration: none; white-space: nowrap; }
+.join-button { background: #ec3987; color: #fff; box-shadow: 0 5px 14px rgb(236 57 135 / 20%); }
+.teacher-card { margin: 0; padding: 12px 12px 20px; border-radius: 18px; background: #fff1f4; text-align: center; }
+.teacher-card img { display: block; width: 100%; aspect-ratio: 1.12 / 1; object-fit: cover; object-position: center 38%; border-radius: 12px; box-shadow: 0 5px 14px rgb(35 38 30 / 13%); }
+.teacher-card figcaption { margin: 17px 8px 0; color: #46455a; font: italic 17px/1.45 Georgia, "Times New Roman", serif; }
+@media (max-width: 900px) {
+  .topbar { padding: 0 20px; grid-template-columns: 160px minmax(0, 1fr) auto; gap: 12px; }
+  .logo-link { width: 156px; height: 52px; }
+  .site-title { gap: 8px; font-size: clamp(11px, 1.5vw, 16px); }
+  .top-note { font-size: 12px; }
+  .story-grid { width: min(100% - 40px, 720px); grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+  .intro-section { width: min(100% - 40px, 720px); padding: 22px; gap: 24px; }
+  .story-card { grid-template-rows: minmax(0, 1fr) 75px; }
+  .card-caption { grid-template-columns: 80px minmax(0, 1fr); }
+  .caption-copy { padding: 6px 7px; }
+  .word-count, .hsk-level { font-size: 10px; }
+}
+@media (max-width: 560px) {
+  .topbar { height: 64px; padding: 0 16px; grid-template-columns: 98px minmax(0, 1fr) auto; gap: 8px; }
+  .logo-link { width: 98px; height: 34px; }
+  .site-title { gap: 6px; font-size: clamp(9px, 2.6vw, 13px); white-space: nowrap; }
+  .site-title-chinese { font-size: 1.1em; }
+  .site-title-english { font-size: .9em; }
+  .top-note { font-size: clamp(8px, 2.1vw, 11px); }
+  .story-grid { width: min(100% - 32px, 430px); grid-template-columns: 1fr; gap: 18px; padding-top: 20px; }
+  .intro-section { width: min(100% - 32px, 430px); grid-template-columns: 1fr; padding: 17px; gap: 22px; margin-bottom: 38px; }
+  .intro-copy h1 { font-size: 34px; }
+  .intro-lead { font-size: 15px; }
+  .intro-description { font-size: 13px; }
+  .intro-benefits { font-size: 12px; }
+  .join-button { min-height: 42px; padding: 0 13px; font-size: 11px; }
+  .teacher-card { order: -1; }
+  .teacher-card img { aspect-ratio: 1.2 / 1; }
+  .teacher-card figcaption { font-size: 15px; }
+  .story-card { grid-template-rows: minmax(0, 1fr) 75px; }
+  .story-title { font-size: 16px; }
+}
+@media (max-width: 390px) {
+  .topbar { height: 60px; grid-template-columns: 76px minmax(0, 1fr) auto; padding: 0 10px; gap: 6px; }
+  .logo-link { width: 76px; height: 30px; }
+  .site-title { gap: 4px; font-size: 8px; }
+  .top-note { font-size: 8px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; } }
+
+.top-actions { display: flex; align-items: center; justify-self: end; gap: 8px; }
+.top-action { min-height: 40px; padding: 0 12px; font-size: 12px; }
+.top-action-self-test { display: inline-flex; align-items: center; justify-content: center; border-radius: 10px; background: #294d3a; color: #fff; box-shadow: 0 5px 14px rgb(41 77 58 / 20%); font: 600 12px Arial, sans-serif; text-decoration: none; white-space: nowrap; }
+.top-action-self-test:hover { background: #203d2e; }
+@media (max-width: 900px) {
+  .top-actions { gap: 6px; }
+  .top-action { padding: 0 9px; font-size: 11px; }
+  .top-action-self-test { font-size: 11px; }
+}
+@media (max-width: 700px) {
+  .topbar { height: 88px; padding: 4px 16px; grid-template-columns: 90px minmax(0, 1fr); grid-template-rows: 50px 28px; gap: 0 10px; }
+  .logo-link { width: 86px; height: 42px; }
+  .site-title { grid-column: 2; justify-self: start; gap: 5px; font-size: clamp(9px, 2.2vw, 13px); text-align: left; }
+  .top-actions { grid-column: 1 / -1; justify-self: end; gap: 6px; }
+  .top-action, .top-action-self-test { min-height: 27px; padding: 0 10px; font-size: 10px; }
+}
+@media (max-width: 390px) {
+  .topbar { height: 82px; grid-template-columns: 78px minmax(0, 1fr); grid-template-rows: 46px 26px; padding: 4px 10px; gap: 0 7px; }
+  .logo-link { width: 76px; height: 36px; }
+  .site-title { gap: 3px; font-size: 8px; }
+  .top-actions { gap: 5px; }
+  .top-action, .top-action-self-test { min-height: 25px; padding: 0 8px; font-size: 9px; }
+}
+
+/* Mobile header layout for index1.html: keep logo, title, and actions in separate rows. */
+@media (max-width: 700px) {
+  .topbar {
+    height: 92px;
+    min-height: 92px;
+    padding: 4px 14px;
+    grid-template-columns: 80px minmax(0, 1fr);
+    grid-template-rows: 56px 28px;
+    gap: 0 10px;
+  }
+  .logo-link {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
+    width: 78px;
+    height: 42px;
+  }
+  .site-title {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: start;
+    align-self: center;
+    min-width: 0;
+    max-width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 4px;
+    font-size: clamp(10px, 2.4vw, 14px);
+    line-height: 1.2;
+    text-align: left;
+    white-space: normal;
+  }
+  .site-title-chinese { white-space: nowrap; }
+  .top-actions {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: end;
+    align-self: center;
+    gap: 6px;
+  }
+  .top-action, .top-action-self-test {
+    min-height: 28px;
+    padding: 0 10px;
+    font-size: clamp(9px, 2.5vw, 11px);
+  }
+}
+@media (max-width: 390px) {
+  .topbar {
+    padding: 4px 10px;
+    grid-template-columns: 70px minmax(0, 1fr);
+    gap: 0 7px;
+  }
+  .logo-link { width: 68px; height: 36px; }
+  .site-title { gap: 3px; font-size: clamp(9px, 2.8vw, 11px); }
+  .top-actions { gap: 5px; }
+  .top-action, .top-action-self-test { padding: 0 8px; }
+}
+
+/* Final compact mobile header: constrained logo and non-overlapping title/actions. */
+@media (max-width: 700px) {
+  .topbar {
+    height: 92px;
+    min-height: 92px;
+    padding: 4px 12px;
+    grid-template-columns: 72px minmax(0, 1fr);
+    grid-template-rows: 54px 30px;
+    gap: 0 8px;
+    overflow: hidden;
+  }
+  .logo-link { grid-column: 1; grid-row: 1; width: 66px; height: 38px; max-width: 66px; max-height: 38px; }
+  .logo-link img { width: 100%; height: 100%; max-width: 100%; max-height: 100%; object-fit: contain; }
+  .site-title {
+    grid-column: 2; grid-row: 1; justify-self: start; align-self: center;
+    min-width: 0; max-width: 100%; flex-wrap: wrap; justify-content: flex-start;
+    gap: 3px; font-size: clamp(9px, 2.6vw, 12px); line-height: 1.2;
+    text-align: left; white-space: normal;
+  }
+  .site-title-chinese { white-space: nowrap; font-size: 1.05em; }
+  .top-actions { grid-column: 1 / -1; grid-row: 2; justify-self: end; align-self: center; gap: 5px; }
+  .top-action, .top-action-self-test { min-height: 27px; padding: 0 8px; font-size: 10px; }
+}
+@media (max-width: 390px) {
+  .topbar { height: 88px; min-height: 88px; grid-template-columns: 68px minmax(0, 1fr); grid-template-rows: 50px 28px; padding: 4px 10px; gap: 0 7px; }
+  .logo-link { width: 62px; height: 34px; max-width: 62px; max-height: 34px; }
+  .site-title { gap: 2px; font-size: 9px; }
+  .top-action, .top-action-self-test { min-height: 25px; padding: 0 7px; font-size: 9px; }
+}
+
+  </style>
 </head>
 <body>
   <header class="topbar">
     <a class="logo-link" href="#top" aria-label="Chinese Reading home"><img src="./logo.png" alt="Chinese Reading"></a>
     <div class="site-title"><span class="site-title-english">Mandarin Reading Club (October)</span><span class="site-title-chinese">中文阅读（十月）</span></div>
-    <div class="top-actions"><a class="top-action top-action-self-test" href="./Octobe-self-test.html" target="_blank" rel="noopener noreferrer">Self-Test</a><a class="join-button top-action" href="https://really-mandarin-club.lovable.app/" target="_blank" rel="noopener noreferrer">Renew for Next Month</a></div>
+    <div class="top-actions"><a class="top-action top-action-self-test" href="./October-self-test.html" target="_blank" rel="noopener noreferrer">Self-Test</a><a class="join-button top-action" href="https://really-mandarin-club.lovable.app/" target="_blank" rel="noopener noreferrer">Renew for Next Month</a></div>
   </header>
   <main id="top" class="story-grid" aria-label="October stories"></main>
   <section class="intro-section" aria-labelledby="club-title">
@@ -38,4 +279,5 @@
   <script src="./app.js"></script>
 </body>
 </html>
+
 
