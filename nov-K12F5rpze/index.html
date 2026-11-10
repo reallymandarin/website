@@ -278,15 +278,10 @@ body { margin: 0; min-width: 320px; }
     </figure>
   </section>
   <script>
-const stories = [
-["再见，香港霓虹灯","Goodbye, Hong Kong Neon Signs",412,"文化","Culture"],
-["将在250年后打开的时间胶囊","The Time Capsule to Be Opened in 250 Years",421,"环球","Global"],
-["会说话会跳舞的机器鸭","The Talking, Dancing Robot Duck",470,"科学","Science"],
-["全都是“坏人”！-香港迪士尼万圣节表演","All the Villains! — Hong Kong Disneyland Halloween Show",392,"文化","Culture"],
-["夏令时和冬令时的由来","The Origin of Daylight Saving and Standard Time",409,"生活","Life"]];
+const stories = [["再见，香港霓虹灯", "Goodbye, Hong Kong Neon Signs", 412, "文化", "Culture"], ["将在250年后打开的时间胶囊", "The Time Capsule to Be Opened in 250 Years", 421, "环球", "Global"], ["会说话会跳舞的机器鸭", "The Talking, Dancing Robot Duck", 470, "科学", "Science"], ["全都是“坏人”！-香港迪士尼万圣节表演", "All the Villains! — Hong Kong Disneyland Halloween Show", 392, "文化", "Culture"], ["夏令时和冬令时的由来", "The Origin of Daylight Saving and Standard Time", 409, "生活", "Life"], ["手机在偷听你吗？", "Is Your Phone Listening to You?", 474, "生活", "Life"], ["肯德基和百事可乐“分手”了", "KFC and Pepsi “Break Up”", 442, "环球", "Global"], ["太空狗莱卡", "Laika, the Space Dog", 523, "科学", "Science"], ["达芬奇 - 不只是画家", "Leonardo da Vinci - More Than a Painter", 455, "人物", "People"], ["珍珠的历史", "The History of Pearls", 465, "历史", "History"]];
 const grid=document.querySelector(".story-grid");
 const colors={"环球":"#aca193","科学":"#5f84a9","文化":"#8d5877","人物":"#d89fa4","生活":"#aa94c2","历史":"#a4be9a"};
-grid.innerHTML=stories.map((x,i)=>{const n=String(i+1).padStart(2,"0");return '<a class="story-card" href="./'+n+'.html" target="_blank" rel="noopener noreferrer"><img src="./PIC'+n+'.jpg" alt="'+x[1]+'" loading="lazy"><div class="card-caption" style="--category-color:'+colors[x[3]]+'"><div class="category-badge"><span class="story-number">'+n+'</span><span class="category-copy"><span class="category-name han">'+x[3]+'</span><span class="category-name-en">'+x[4]+'</span></span></div><div class="caption-copy"><span class="title-row"><span class="story-title han">'+x[0]+'</span><span class="word-count">'+x[2]+'字</span></span><span class="english-row"><span class="story-title-en">'+x[1]+'</span><span class="hsk-level">HSK3</span></span></div></div></a>';}).join("") + '<div class="story-card update-card"><div class="update-message">This month you will receive fifteen stories. Look for the remaining stories in the November 10 update.</div></div>';
+grid.innerHTML=stories.map((x,i)=>{const n=String(i+1).padStart(2,"0");return '<a class="story-card" href="./'+n+'.html" target="_blank" rel="noopener noreferrer"><img src="./'+(i<5?'PIC':'pic')+n+'.jpg" alt="'+x[1]+'" loading="lazy"><div class="card-caption" style="--category-color:'+colors[x[3]]+'"><div class="category-badge"><span class="story-number">'+n+'</span><span class="category-copy"><span class="category-name han">'+x[3]+'</span><span class="category-name-en">'+x[4]+'</span></span></div><div class="caption-copy"><span class="title-row"><span class="story-title han">'+x[0]+'</span><span class="word-count">'+x[2]+'字</span></span><span class="english-row"><span class="story-title-en">'+x[1]+'</span><span class="hsk-level">HSK3</span></span></div></div></a>';}).join("") + '<div class="story-card update-card"><div class="update-message">This month you will receive fifteen stories. Look for the remaining stories in the November 20 update.</div></div>';
 </script>
 </body>
 </html>
