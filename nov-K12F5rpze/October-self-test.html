@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>十五个故事阅读后词汇自测（November）</title>
+    <style>
+        :root {
+            --primary-blue: #4a90e2;
+            --primary-green: #2ecc71;
+            --primary-green-dark: #27ae60;
+            --btn-gray: #eef2f5;
+            --btn-gray-text: #555;
+            --border-color: #e2e8f0;
+            --highlight-bg: #fff3bf;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f8fafc;
+            color: #333;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* 布局控制 */
+        .container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 左侧面板 */
+        .left-panel {
+            width: 500px;
+            min-width: 350px;
+            background: #ffffff;
+            border-right: 1px solid var(--border-color);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.03);
+        }
+
+        .header {
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 4px;
+        }
+
+        .header p {
+            font-size: 0.8rem;
+            color: #718096;
+        }
+
+        /* HSK 级别选择器 */
+        .hsk-selector {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .hsk-btn {
+            border: 1.5px solid var(--primary-blue);
+            background: #fff;
+            color: var(--primary-blue);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .hsk-btn.active {
+            background: var(--primary-blue);
+            color: #fff;
+        }
+
+        /* 词语卡片 */
+        .card {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px 16px;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .word-display-area {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            min-height: 80px;
+            position: relative;
+        }
+
+        /* 楷体显示被测词汇 */
+        .word-text {
+            font-family: "Kaiti SC", "STKaiti", "楷体", "KaiTi", serif;
+            font-size: 3rem;
+            font-weight: bold;
+            color: #1a202c;
+            line-height: 1.2;
+        }
+
+        .hsk-badge {
+            background: #ebf8ff;
+            color: #3182ce;
+            border: 1px solid #bee3f8;
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: bold;
+        }
+
+        .info-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .info-text {
+            font-size: 0.95rem;
+            color: #4a5568;
+            min-height: 1.4em;
+        }
+
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .control-btn {
+            background: var(--btn-gray);
+            border: none;
+            color: var(--btn-gray-text);
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .control-btn:hover {
+            background: #e2e8f0;
+        }
+
+        /* 控制区域 */
+        .action-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 4px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            color: #4a5568;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .reset-btn {
+            border: 1px solid #feb2b2;
+            background: #fff5f5;
+            color: #e53e3e;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .reset-btn:hover {
+            background: #fed7d7;
+        }
+
+        /* 主测试按钮 */
+        .next-btn {
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background 0.2s;
+            box-shadow: 0 2px 4px rgba(46, 204, 113, 0.2);
+        }
+
+        .next-btn:hover {
+            background: var(--primary-green-dark);
+        }
+
+        .badge-count {
+            background: rgba(255, 255, 255, 0.25);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+        }
+
+        /* 右侧面板（文章区） */
+        .right-panel {
+            flex: 1;
+            padding: 32px;
+            overflow-y: auto;
+            background: #f1f5f9;
+        }
+
+        .stories-container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .story-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 24px 28px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .story-tag {
+            color: var(--primary-blue);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .story-content {
+            font-family: "Kaiti SC", "STKaiti", "楷体", "KaiTi", serif;
+            font-size: 1.08rem;
+            line-height: 1.85;
+            color: #2d3748;
+            white-space: pre-line;
+        }
+
+        /* 句子高亮样式 */
+        .sentence-highlight {
+            background-color: var(--highlight-bg);
+            border-bottom: 2px solid #f59e0b;
+            padding: 2px 0;
+            border-radius: 2px;
+            transition: background-color 0.3s;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 左侧栏 -->
+    <div class="left-panel">
+        <div class="header">
+            <h1>十五个故事阅读后词汇自测</h1>
+            <p>November Vocabulary Self-Test (Stories 01–15)</p>
+        </div>
+
+        <div class="hsk-selector">
+            <button class="hsk-btn" onclick="selectHSK('HSK3')">HSK3</button>
+            <button class="hsk-btn" onclick="selectHSK('HSK4')">HSK4</button>
+            <button class="hsk-btn active" onclick="selectHSK('HSK5')">HSK5</button>
+        </div>
+
+        <div class="card">
+            <div class="word-display-area">
+                <span class="word-text" id="target-word">加载中</span>
+                <span class="hsk-badge" id="word-hsk">HSK5</span>
+            </div>
+
+            <div class="info-container">
+                <div class="info-text" id="pinyin-text" style="visibility: hidden;">--</div>
+                <div class="info-text" id="english-text" style="visibility: hidden;">--</div>
+            </div>
+
+            <div class="btn-group">
+                <button class="control-btn" onclick="togglePinyin()">
+                    <span id="pinyin-btn-text">Show 汉语拼音</span>
+                </button>
+                <button class="control-btn" onclick="toggleEnglish()">
+                    <span id="english-btn-text">Show 英文</span>
+                </button>
+            </div>
+
+            <button class="control-btn" style="width: 100%; background: #ebf8ff; color: #2b6cb0;" onclick="locateInText()">
+                定位到原文 📍
+            </button>
+        </div>
+
+        <div class="action-row">
+            <label class="checkbox-label">
+                <input type="checkbox" id="pass-checkbox" onchange="togglePassCurrentWord()">
+                <span>懂了 Got it</span>
+            </label>
+            <button class="reset-btn" onclick="resetAll()">Reset ↺</button>
+        </div>
+
+        <button class="next-btn" onclick="nextWord()">
+            <span>下一个词 Next Word</span>
+            <span class="badge-count" id="remaining-count">剩余: 0</span>
+        </button>
+    </div>
+
+    <!-- 右侧栏（文章内容） -->
+    <div class="right-panel" id="right-panel">
+        <div class="stories-container" id="stories-container">
+            <!-- 动态生成文章 -->
+        </div>
+    </div>
+</div>
+
+<script>
+const vocabulary = [
+  {"word": "街道", "hsk": "HSK3", "story": "Story 01", "pinyin": "jiēdào", "english": "street"},
+  {"word": "简单", "hsk": "HSK3", "story": "Story 01", "pinyin": "jiǎndān", "english": "simple; uncomplicated"},
+  {"word": "主要", "hsk": "HSK3", "story": "Story 01", "pinyin": "zhǔyào", "english": "main; major; chief"},
+  {"word": "城市", "hsk": "HSK3", "story": "Story 01", "pinyin": "chéngshì", "english": "city"},
+  {"word": "发现", "hsk": "HSK3", "story": "Story 01", "pinyin": "fāxiàn", "english": "to discover; to find"},
+  {"word": "条", "hsk": "HSK3", "story": "Story 01", "pinyin": "tiáo", "english": "measure word for long/narrow/strip-like things"},
+  {"word": "全部", "hsk": "HSK4", "story": "Story 01", "pinyin": "quánbù", "english": "all; whole; entire"},
+  {"word": "过程", "hsk": "HSK4", "story": "Story 01", "pinyin": "guòchéng", "english": "process; course"},
+  {"word": "严格", "hsk": "HSK4", "story": "Story 01", "pinyin": "yángé", "english": "strict; rigorous"},
+  {"word": "精彩", "hsk": "HSK4", "story": "Story 01", "pinyin": "jīngcǎi", "english": "wonderful; marvelous; brilliant"},
+  {"word": "复杂", "hsk": "HSK4", "story": "Story 01", "pinyin": "fùzá", "english": "complicated; complex"},
+  {"word": "座", "hsk": "HSK4", "story": "Story 01", "pinyin": "zuò", "english": "measure word for buildings, mountains, bridges"},
+  {"word": "安装", "hsk": "HSK5", "story": "Story 01", "pinyin": "ānzhuāng", "english": "to install; to mount"},
+  {"word": "标志", "hsk": "HSK5", "story": "Story 01", "pinyin": "biāozhì", "english": "sign; symbol; mark"},
+  {"word": "伸", "hsk": "HSK5", "story": "Story 01", "pinyin": "shēn", "english": "to stretch; to extend"},
+  {"word": "人才", "hsk": "HSK5", "story": "Story 01", "pinyin": "réncái", "english": "talent; talented person"},
+  {"word": "特别", "hsk": "HSK3", "story": "Story 02", "pinyin": "tèbié", "english": "special; especially"},
+  {"word": "像", "hsk": "HSK3", "story": "Story 02", "pinyin": "xiàng", "english": "like; to look like; similar to"},
+  {"word": "公园", "hsk": "HSK3", "story": "Story 02", "pinyin": "gōngyuán", "english": "park"},
+  {"word": "文化", "hsk": "HSK3", "story": "Story 02", "pinyin": "wénhuà", "english": "culture"},
+  {"word": "关于", "hsk": "HSK3", "story": "Story 02", "pinyin": "guānyú", "english": "about; regarding; concerning"},
+  {"word": "照片", "hsk": "HSK3", "story": "Story 02", "pinyin": "zhàopiàn", "english": "photo; photograph; picture"},
+  {"word": "来自", "hsk": "HSK4", "story": "Story 02", "pinyin": "láizì", "english": "to come from"},
+  {"word": "其中", "hsk": "HSK4", "story": "Story 02", "pinyin": "qízhōng", "english": "among which; in it"},
+  {"word": "寄", "hsk": "HSK4", "story": "Story 02", "pinyin": "jì", "english": "to send; to mail"},
+  {"word": "理解", "hsk": "HSK4", "story": "Story 02", "pinyin": "lǐjiě", "english": "to understand; comprehension"},
+  {"word": "也许", "hsk": "HSK4", "story": "Story 02", "pinyin": "yěxǔ", "english": "perhaps; maybe"},
+  {"word": "台", "hsk": "HSK4", "story": "Story 02", "pinyin": "tái", "english": "measure word for machines, devices, performances"},
+  {"word": "日子", "hsk": "HSK5", "story": "Story 02", "pinyin": "rìzi", "english": "day; days; life"},
+  {"word": "记录", "hsk": "HSK5", "story": "Story 02", "pinyin": "jìlù", "english": "to record; record"},
+  {"word": "未来", "hsk": "HSK5", "story": "Story 02", "pinyin": "wèilái", "english": "future"},
+  {"word": "平常", "hsk": "HSK5", "story": "Story 02", "pinyin": "píngcháng", "english": "ordinary; common; usual"},
+  {"word": "最近", "hsk": "HSK3", "story": "Story 03", "pinyin": "zuìjìn", "english": "recently; lately"},
+  {"word": "有名", "hsk": "HSK3", "story": "Story 03", "pinyin": "yǒumíng", "english": "famous; well-known"},
+  {"word": "机会", "hsk": "HSK3", "story": "Story 03", "pinyin": "jīhuì", "english": "opportunity; chance"},
+  {"word": "爬", "hsk": "HSK3", "story": "Story 03", "pinyin": "pá", "english": "to climb; to crawl"},
+  {"word": "然后", "hsk": "HSK3", "story": "Story 03", "pinyin": "ránhòu", "english": "then; afterwards"},
+  {"word": "自己", "hsk": "HSK3", "story": "Story 03", "pinyin": "zìjǐ", "english": "oneself; self"},
+  {"word": "动作", "hsk": "HSK4", "story": "Story 03", "pinyin": "dòngzuò", "english": "action; movement"},
+  {"word": "通过", "hsk": "HSK4", "story": "Story 03", "pinyin": "tōngguò", "english": "through; by means of; to pass"},
+  {"word": "缺点", "hsk": "HSK4", "story": "Story 03", "pinyin": "quēdiǎn", "english": "weakness; shortcoming; defect"},
+  {"word": "周围", "hsk": "HSK4", "story": "Story 03", "pinyin": "zhōuwéi", "english": "surroundings; around"},
+  {"word": "教育", "hsk": "HSK4", "story": "Story 03", "pinyin": "jiàoyù", "english": "education; to educate"},
+  {"word": "笨", "hsk": "HSK4", "story": "Story 03", "pinyin": "bèn", "english": "clumsy; dumb; slow-witted"},
+  {"word": "机器", "hsk": "HSK5", "story": "Story 03", "pinyin": "jīqì", "english": "machine"},
+  {"word": "厘米", "hsk": "HSK5", "story": "Story 03", "pinyin": "límǐ", "english": "centimeter"},
+  {"word": "捡", "hsk": "HSK5", "story": "Story 03", "pinyin": "jiǎn", "english": "to pick up"},
+  {"word": "摔倒", "hsk": "HSK5", "story": "Story 03", "pinyin": "shuāidǎo", "english": "to fall down; to trip"},
+  {"word": "故事", "hsk": "HSK3", "story": "Story 04", "pinyin": "gùshi", "english": "story"},
+  {"word": "终于", "hsk": "HSK3", "story": "Story 04", "pinyin": "zhōngyú", "english": "finally; at last"},
+  {"word": "帽子", "hsk": "HSK3", "story": "Story 04", "pinyin": "màozi", "english": "hat; cap"},
+  {"word": "相信", "hsk": "HSK3", "story": "Story 04", "pinyin": "xiāngxìn", "english": "to believe; to trust"},
+  {"word": "欢迎", "hsk": "HSK3", "story": "Story 04", "pinyin": "huānyíng", "english": "to welcome"},
+  {"word": "总是", "hsk": "HSK3", "story": "Story 04", "pinyin": "zǒngshì", "english": "always"},
+  {"word": "不仅", "hsk": "HSK4", "story": "Story 04", "pinyin": "bùjǐn", "english": "not only"},
+  {"word": "好像", "hsk": "HSK4", "story": "Story 04", "pinyin": "hǎoxiàng", "english": "seem; to look like; as if"},
+  {"word": "博士", "hsk": "HSK4", "story": "Story 04", "pinyin": "bóshì", "english": "doctor; Ph.D."},
+  {"word": "一切", "hsk": "HSK4", "story": "Story 04", "pinyin": "yíqiè", "english": "everything; all"},
+  {"word": "动作", "hsk": "HSK4", "story": "Story 04", "pinyin": "dòngzuò", "english": "action; movement"},
+  {"word": "原来", "hsk": "HSK4", "story": "Story 04", "pinyin": "yuánlái", "english": "originally; it turns out"},
+  {"word": "真实", "hsk": "HSK5", "story": "Story 04", "pinyin": "zhēnshí", "english": "true; real; authentic"},
+  {"word": "可怕", "hsk": "HSK5", "story": "Story 04", "pinyin": "kěpà", "english": "scary; frightening; terrible"},
+  {"word": "公主", "hsk": "HSK5", "story": "Story 04", "pinyin": "gōngzhǔ", "english": "princess"},
+  {"word": "英俊", "hsk": "HSK5", "story": "Story 04", "pinyin": "yīngjùn", "english": "handsome"},
+  {"word": "太阳", "hsk": "HSK3", "story": "Story 05", "pinyin": "tàiyáng", "english": "sun"},
+  {"word": "如果", "hsk": "HSK3", "story": "Story 05", "pinyin": "rúguǒ", "english": "if"},
+  {"word": "变化", "hsk": "HSK3", "story": "Story 05", "pinyin": "biànhuà", "english": "change; to change"},
+  {"word": "经过", "hsk": "HSK3", "story": "Story 05", "pinyin": "jīngguò", "english": "to pass through; after"},
+  {"word": "国家", "hsk": "HSK3", "story": "Story 05", "pinyin": "guójiā", "english": "country; nation"},
+  {"word": "后来", "hsk": "HSK3", "story": "Story 05", "pinyin": "hòulái", "english": "later; afterwards"},
+  {"word": "建议", "hsk": "HSK4", "story": "Story 05", "pinyin": "jiànyì", "english": "to suggest; suggestion; advice"},
+  {"word": "自然", "hsk": "HSK4", "story": "Story 05", "pinyin": "zìrán", "english": "nature; natural"},
+  {"word": "生活", "hsk": "HSK4", "story": "Story 05", "pinyin": "shēnghuó", "english": "life; to live"},
+  {"word": "接受", "hsk": "HSK4", "story": "Story 05", "pinyin": "jiēshòu", "english": "to accept"},
+  {"word": "使用", "hsk": "HSK4", "story": "Story 05", "pinyin": "shǐyòng", "english": "to use; to apply"},
+  {"word": "开玩笑", "hsk": "HSK4", "story": "Story 05", "pinyin": "kāi wánxiào", "english": "to joke; to kid"},
+  {"word": "欧洲", "hsk": "HSK5", "story": "Story 05", "pinyin": "Ōuzhōu", "english": "Europe"},
+  {"word": "农民", "hsk": "HSK5", "story": "Story 05", "pinyin": "nóngmín", "english": "farmer; peasant"},
+  {"word": "能源", "hsk": "HSK5", "story": "Story 05", "pinyin": "néngyuán", "english": "energy; power source"},
+  {"word": "规则", "hsk": "HSK5", "story": "Story 05", "pinyin": "guīzé", "english": "rule; regulation"},
+  {"word": "了解", "hsk": "HSK3", "story": "Story 06", "pinyin": "liǎojiě", "english": "to understand; to know about"},
+  {"word": "世界", "hsk": "HSK3", "story": "Story 06", "pinyin": "shìjiè", "english": "world"},
+  {"word": "自己", "hsk": "HSK3", "story": "Story 06", "pinyin": "zìjǐ", "english": "oneself; self"},
+  {"word": "一直", "hsk": "HSK3", "story": "Story 06", "pinyin": "yìzhí", "english": "all along; straight; continuously"},
+  {"word": "被", "hsk": "HSK3", "story": "Story 06", "pinyin": "bèi", "english": "passive marker; by"},
+  {"word": "其实", "hsk": "HSK3", "story": "Story 06", "pinyin": "qíshí", "english": "actually; in fact"},
+  {"word": "也许", "hsk": "HSK4", "story": "Story 06", "pinyin": "yěxǔ", "english": "perhaps; maybe"},
+  {"word": "无论", "hsk": "HSK4", "story": "Story 06", "pinyin": "wúlùn", "english": "no matter what/how/whether"},
+  {"word": "信息", "hsk": "HSK4", "story": "Story 06", "pinyin": "xìnxī", "english": "information; message"},
+  {"word": "困", "hsk": "HSK4", "story": "Story 06", "pinyin": "kùn", "english": "sleepy; to trap; stranded"},
+  {"word": "只要", "hsk": "HSK4", "story": "Story 06", "pinyin": "zhǐyào", "english": "as long as"},
+  {"word": "购物", "hsk": "HSK4", "story": "Story 06", "pinyin": "gòuwù", "english": "shopping; to shop"},
+  {"word": "影子", "hsk": "HSK5", "story": "Story 06", "pinyin": "yǐngzi", "english": "shadow"},
+  {"word": "建", "hsk": "HSK5", "story": "Story 06", "pinyin": "jiàn", "english": "to build; to construct"},
+  {"word": "记录", "hsk": "HSK5", "story": "Story 06", "pinyin": "jìlù", "english": "to record; record"},
+  {"word": "搜索", "hsk": "HSK5", "story": "Story 06", "pinyin": "sōusuǒ", "english": "to search"},
+  {"word": "结束", "hsk": "HSK3", "story": "Story 07", "pinyin": "jiéshù", "english": "to end; to finish"},
+  {"word": "最近", "hsk": "HSK3", "story": "Story 07", "pinyin": "zuìjìn", "english": "recently; lately"},
+  {"word": "选择", "hsk": "HSK3", "story": "Story 07", "pinyin": "xuǎnzé", "english": "to choose; choice"},
+  {"word": "饮料", "hsk": "HSK3", "story": "Story 07", "pinyin": "yǐnliào", "english": "beverage; drink"},
+  {"word": "换", "hsk": "HSK3", "story": "Story 07", "pinyin": "huàn", "english": "to exchange; to change; to replace"},
+  {"word": "重要", "hsk": "HSK3", "story": "Story 07", "pinyin": "zhòngyào", "english": "important"},
+  {"word": "增加", "hsk": "HSK4", "story": "Story 07", "pinyin": "zēngjiā", "english": "to increase; to add"},
+  {"word": "赢", "hsk": "HSK4", "story": "Story 07", "pinyin": "yíng", "english": "to win"},
+  {"word": "瓶", "hsk": "HSK4", "story": "Story 07", "pinyin": "píng", "english": "bottle; measure word for bottled items"},
+  {"word": "顺利", "hsk": "HSK4", "story": "Story 07", "pinyin": "shùnlì", "english": "smooth; successful"},
+  {"word": "原因", "hsk": "HSK4", "story": "Story 07", "pinyin": "yuányīn", "english": "reason; cause"},
+  {"word": "发生", "hsk": "HSK4", "story": "Story 07", "pinyin": "fāshēng", "english": "to happen; to take place"},
+  {"word": "分手", "hsk": "HSK5", "story": "Story 07", "pinyin": "fēnshǒu", "english": "to break up; to part ways"},
+  {"word": "挑战", "hsk": "HSK5", "story": "Story 07", "pinyin": "tiǎozhàn", "english": "challenge; to challenge"},
+  {"word": "开发", "hsk": "HSK5", "story": "Story 07", "pinyin": "kāifā", "english": "to develop; to exploit"},
+  {"word": "专心", "hsk": "HSK5", "story": "Story 07", "pinyin": "zhuānxīn", "english": "attentive; absorbed; focused"},
+  {"word": "练习", "hsk": "HSK3", "story": "Story 08", "pinyin": "liànxí", "english": "to practice; exercise"},
+  {"word": "相信", "hsk": "HSK3", "story": "Story 08", "pinyin": "xiāngxìn", "english": "to believe; to trust"},
+  {"word": "努力", "hsk": "HSK3", "story": "Story 08", "pinyin": "nǔlì", "english": "hardworking; to make an effort"},
+  {"word": "后来", "hsk": "HSK3", "story": "Story 08", "pinyin": "hòulái", "english": "later; afterwards"},
+  {"word": "饿", "hsk": "HSK3", "story": "Story 08", "pinyin": "è", "english": "hungry"},
+  {"word": "世界", "hsk": "HSK3", "story": "Story 08", "pinyin": "shìjiè", "english": "world"},
+  {"word": "平时", "hsk": "HSK4", "story": "Story 08", "pinyin": "píngshí", "english": "usually; in normal times"},
+  {"word": "留", "hsk": "HSK4", "story": "Story 08", "pinyin": "liú", "english": "to stay; to leave behind; to reserve"},
+  {"word": "永远", "hsk": "HSK4", "story": "Story 08", "pinyin": "yǒngyuǎn", "english": "forever; always"},
+  {"word": "周围", "hsk": "HSK4", "story": "Story 08", "pinyin": "zhōuwéi", "english": "surroundings; around"},
+  {"word": "发生", "hsk": "HSK4", "story": "Story 08", "pinyin": "fāshēng", "english": "to happen; to take place"},
+  {"word": "接着", "hsk": "HSK4", "story": "Story 08", "pinyin": "jiēzhe", "english": "then; next; to catch"},
+  {"word": "整个", "hsk": "HSK5", "story": "Story 08", "pinyin": "zhěnggè", "english": "whole; entire"},
+  {"word": "摸", "hsk": "HSK5", "story": "Story 08", "pinyin": "mō", "english": "to touch; to feel; to stroke"},
+  {"word": "贴", "hsk": "HSK5", "story": "Story 08", "pinyin": "tiē", "english": "to paste; to stick; close to"},
+  {"word": "建立", "hsk": "HSK5", "story": "Story 08", "pinyin": "jiànlì", "english": "to establish; to set up"},
+  {"word": "一直", "hsk": "HSK3", "story": "Story 09", "pinyin": "yìzhí", "english": "all along; straight; continuously"},
+  {"word": "动物", "hsk": "HSK3", "story": "Story 09", "pinyin": "dòngwù", "english": "animal"},
+  {"word": "关于", "hsk": "HSK3", "story": "Story 09", "pinyin": "guānyú", "english": "about; regarding; concerning"},
+  {"word": "数学", "hsk": "HSK3", "story": "Story 09", "pinyin": "shùxué", "english": "mathematics; math"},
+  {"word": "感兴趣", "hsk": "HSK3", "story": "Story 09", "pinyin": "gǎn xìngqù", "english": "to be interested in"},
+  {"word": "段", "hsk": "HSK3", "story": "Story 09", "pinyin": "duàn", "english": "paragraph; section; segment"},
+  {"word": "同时", "hsk": "HSK4", "story": "Story 09", "pinyin": "tóngshí", "english": "at the same time; meanwhile"},
+  {"word": "支持", "hsk": "HSK4", "story": "Story 09", "pinyin": "zhīchí", "english": "to support; support"},
+  {"word": "由于", "hsk": "HSK4", "story": "Story 09", "pinyin": "yóuyú", "english": "due to; owing to; because of"},
+  {"word": "不仅", "hsk": "HSK4", "story": "Story 09", "pinyin": "bùjǐn", "english": "not only"},
+  {"word": "自然", "hsk": "HSK4", "story": "Story 09", "pinyin": "zìrán", "english": "nature; natural"},
+  {"word": "并", "hsk": "HSK4", "story": "Story 09", "pinyin": "bìng", "english": "and; moreover; used before negative for emphasis"},
+  {"word": "家庭", "hsk": "HSK5", "story": "Story 09", "pinyin": "jiātíng", "english": "family; household"},
+  {"word": "观察", "hsk": "HSK5", "story": "Story 09", "pinyin": "guānchá", "english": "to observe; observation"},
+  {"word": "专心", "hsk": "HSK5", "story": "Story 09", "pinyin": "zhuānxīn", "english": "attentive; absorbed; focused"},
+  {"word": "思考", "hsk": "HSK5", "story": "Story 09", "pinyin": "sīkǎo", "english": "to think deeply; to ponder"},
+  {"word": "或者", "hsk": "HSK3", "story": "Story 10", "pinyin": "huòzhě", "english": "or; perhaps"},
+  {"word": "放", "hsk": "HSK3", "story": "Story 10", "pinyin": "fàng", "english": "to put; to place; to release"},
+  {"word": "包", "hsk": "HSK3", "story": "Story 10", "pinyin": "bāo", "english": "to wrap; bag; package"},
+  {"word": "经过", "hsk": "HSK3", "story": "Story 10", "pinyin": "jīngguò", "english": "to pass through; after"},
+  {"word": "容易", "hsk": "HSK3", "story": "Story 10", "pinyin": "róngyì", "english": "easy"},
+  {"word": "以前", "hsk": "HSK3", "story": "Story 10", "pinyin": "yǐqián", "english": "before; previously; in the past"},
+  {"word": "出生", "hsk": "HSK4", "story": "Story 10", "pinyin": "chūshēng", "english": "to be born; birth"},
+  {"word": "原来", "hsk": "HSK4", "story": "Story 10", "pinyin": "yuánlái", "english": "originally; it turns out"},
+  {"word": "普遍", "hsk": "HSK4", "story": "Story 10", "pinyin": "pǔbiàn", "english": "universal; widespread; common"},
+  {"word": "价格", "hsk": "HSK4", "story": "Story 10", "pinyin": "jiàgé", "english": "price"},
+  {"word": "阳光", "hsk": "HSK4", "story": "Story 10", "pinyin": "yángguāng", "english": "sunshine; sunlight"},
+  {"word": "技术", "hsk": "HSK4", "story": "Story 10", "pinyin": "jìshù", "english": "technology; technique; skill"},
+  {"word": "宝贝", "hsk": "HSK5", "story": "Story 10", "pinyin": "bǎobèi", "english": "treasure; darling; precious thing"},
+  {"word": "圆", "hsk": "HSK5", "story": "Story 10", "pinyin": "yuán", "english": "round; circular"},
+  {"word": "运气", "hsk": "HSK5", "story": "Story 10", "pinyin": "yùnqì", "english": "luck; fortune"},
+  {"word": "不断", "hsk": "HSK5", "story": "Story 10", "pinyin": "búduàn", "english": "continuously; incessantly"},
+  {"word": "聊天", "hsk": "HSK3", "story": "Story 11", "pinyin": "liáotiān", "english": "to chat"},
+  {"word": "脸", "hsk": "HSK3", "story": "Story 11", "pinyin": "liǎn", "english": "face"},
+  {"word": "清楚", "hsk": "HSK3", "story": "Story 11", "pinyin": "qīngchu", "english": "clear; distinct"},
+  {"word": "发", "hsk": "HSK3", "story": "Story 11", "pinyin": "fā", "english": "to send; to issue; to emit"},
+  {"word": "自己", "hsk": "HSK3", "story": "Story 11", "pinyin": "zìjǐ", "english": "oneself; self"},
+  {"word": "后来", "hsk": "HSK3", "story": "Story 11", "pinyin": "hòulái", "english": "later; afterwards"},
+  {"word": "使用", "hsk": "HSK4", "story": "Story 11", "pinyin": "shǐyòng", "english": "to use; to apply"},
+  {"word": "心情", "hsk": "HSK4", "story": "Story 11", "pinyin": "xīnqíng", "english": "mood; state of mind"},
+  {"word": "当", "hsk": "HSK4", "story": "Story 11", "pinyin": "dāng", "english": "when; at the time of; to act as"},
+  {"word": "以为", "hsk": "HSK4", "story": "Story 11", "pinyin": "yǐwéi", "english": "to believe erroneously; to think"},
+  {"word": "开玩笑", "hsk": "HSK4", "story": "Story 11", "pinyin": "kāi wánxiào", "english": "to joke; to kid"},
+  {"word": "准确", "hsk": "HSK4", "story": "Story 11", "pinyin": "zhǔnquè", "english": "accurate; exact"},
+  {"word": "网络", "hsk": "HSK5", "story": "Story 11", "pinyin": "wǎngluò", "english": "network; internet"},
+  {"word": "对方", "hsk": "HSK5", "story": "Story 11", "pinyin": "duìfāng", "english": "the other party; counterpart"},
+  {"word": "表情", "hsk": "HSK5", "story": "Story 11", "pinyin": "biǎoqíng", "english": "facial expression; emotion"},
+  {"word": "文字", "hsk": "HSK5", "story": "Story 11", "pinyin": "wénzì", "english": "characters; script; written language"},
+  {"word": "更", "hsk": "HSK3", "story": "Story 12", "pinyin": "gèng", "english": "even more; further"},
+  {"word": "重要", "hsk": "HSK3", "story": "Story 12", "pinyin": "zhòngyào", "english": "important"},
+  {"word": "总", "hsk": "HSK3", "story": "Story 12", "pinyin": "zǒng", "english": "always; overall; chief"},
+  {"word": "然后", "hsk": "HSK3", "story": "Story 12", "pinyin": "ránhòu", "english": "then; afterwards"},
+  {"word": "国家", "hsk": "HSK3", "story": "Story 12", "pinyin": "guójiā", "english": "country; nation"},
+  {"word": "放", "hsk": "HSK3", "story": "Story 12", "pinyin": "fàng", "english": "to put; to place; to release"},
+  {"word": "可是", "hsk": "HSK4", "story": "Story 12", "pinyin": "kěshì", "english": "but; however"},
+  {"word": "辛苦", "hsk": "HSK4", "story": "Story 12", "pinyin": "xīnkǔ", "english": "hard; laborious; toilsome"},
+  {"word": "技术", "hsk": "HSK4", "story": "Story 12", "pinyin": "jìshù", "english": "technology; technique; skill"},
+  {"word": "积累", "hsk": "HSK4", "story": "Story 12", "pinyin": "jīlěi", "english": "to accumulate; accumulation"},
+  {"word": "保护", "hsk": "HSK4", "story": "Story 12", "pinyin": "bǎohù", "english": "to protect; protection"},
+  {"word": "空气", "hsk": "HSK4", "story": "Story 12", "pinyin": "kōngqì", "english": "air"},
+  {"word": "岛", "hsk": "HSK5", "story": "Story 12", "pinyin": "dǎo", "english": "island"},
+  {"word": "从此", "hsk": "HSK5", "story": "Story 12", "pinyin": "cóngcǐ", "english": "from this moment on; since then"},
+  {"word": "粮食", "hsk": "HSK5", "story": "Story 12", "pinyin": "liángshí", "english": "grain; foodstuff"},
+  {"word": "利用", "hsk": "HSK5", "story": "Story 12", "pinyin": "lìyòng", "english": "to utilize; to make use of"},
+  {"word": "带", "hsk": "HSK3", "story": "Story 13", "pinyin": "dài", "english": "to bring; to take; belt/band"},
+  {"word": "简单", "hsk": "HSK3", "story": "Story 13", "pinyin": "jiǎndān", "english": "simple; uncomplicated"},
+  {"word": "世界", "hsk": "HSK3", "story": "Story 13", "pinyin": "shìjiè", "english": "world"},
+  {"word": "同意", "hsk": "HSK3", "story": "Story 13", "pinyin": "tóngyì", "english": "to agree; to consent"},
+  {"word": "行李箱", "hsk": "HSK3", "story": "Story 13", "pinyin": "xínglixiāng", "english": "suitcase; luggage"},
+  {"word": "打算", "hsk": "HSK3", "story": "Story 13", "pinyin": "dǎsuàn", "english": "to plan; to intend; plan"},
+  {"word": "当时", "hsk": "HSK4", "story": "Story 13", "pinyin": "dāngshí", "english": "at that time; then"},
+  {"word": "散步", "hsk": "HSK4", "story": "Story 13", "pinyin": "sànbù", "english": "to take a walk; to stroll"},
+  {"word": "交", "hsk": "HSK4", "story": "Story 13", "pinyin": "jiāo", "english": "to hand over; to submit; to make friends"},
+  {"word": "拒绝", "hsk": "HSK4", "story": "Story 13", "pinyin": "jùjué", "english": "to refuse; to reject"},
+  {"word": "著名", "hsk": "HSK4", "story": "Story 13", "pinyin": "zhùmíng", "english": "famous; well-known"},
+  {"word": "只好", "hsk": "HSK4", "story": "Story 13", "pinyin": "zhǐhǎo", "english": "to have no choice but to"},
+  {"word": "离婚", "hsk": "HSK5", "story": "Story 13", "pinyin": "líhūn", "english": "to divorce"},
+  {"word": "完整", "hsk": "HSK5", "story": "Story 13", "pinyin": "wánzhěng", "english": "complete; intact"},
+  {"word": "餐", "hsk": "HSK5", "story": "Story 13", "pinyin": "cān", "english": "meal"},
+  {"word": "方", "hsk": "HSK5", "story": "Story 13", "pinyin": "fāng", "english": "square; side; direction"},
+  {"word": "离开", "hsk": "HSK3", "story": "Story 14", "pinyin": "líkāi", "english": "to leave"},
+  {"word": "后来", "hsk": "HSK3", "story": "Story 14", "pinyin": "hòulái", "english": "later; afterwards"},
+  {"word": "照片", "hsk": "HSK3", "story": "Story 14", "pinyin": "zhàopiàn", "english": "photo; photograph"},
+  {"word": "经过", "hsk": "HSK3", "story": "Story 14", "pinyin": "jīngguò", "english": "to pass through; after"},
+  {"word": "认为", "hsk": "HSK3", "story": "Story 14", "pinyin": "rènwéi", "english": "to think; to believe; to consider"},
+  {"word": "脚", "hsk": "HSK3", "story": "Story 14", "pinyin": "jiǎo", "english": "foot"},
+  {"word": "结果", "hsk": "HSK4", "story": "Story 14", "pinyin": "jiéguǒ", "english": "result; outcome"},
+  {"word": "所有", "hsk": "HSK4", "story": "Story 14", "pinyin": "suǒyǒu", "english": "all"},
+  {"word": "内", "hsk": "HSK4", "story": "Story 14", "pinyin": "nèi", "english": "inside; within"},
+  {"word": "使用", "hsk": "HSK4", "story": "Story 14", "pinyin": "shǐyòng", "english": "to use; to apply"},
+  {"word": "接着", "hsk": "HSK4", "story": "Story 14", "pinyin": "jiēzhe", "english": "then; next"},
+  {"word": "秒", "hsk": "HSK4", "story": "Story 14", "pinyin": "miǎo", "english": "second (unit of time)"},
+  {"word": "连续", "hsk": "HSK5", "story": "Story 14", "pinyin": "liánxù", "english": "continuous; in a row"},
+  {"word": "兄弟", "hsk": "HSK5", "story": "Story 14", "pinyin": "xiōngdì", "english": "brothers"},
+  {"word": "布", "hsk": "HSK5", "story": "Story 14", "pinyin": "bù", "english": "cloth; fabric"},
+  {"word": "机器", "hsk": "HSK5", "story": "Story 14", "pinyin": "jīqì", "english": "machine"},
+  {"word": "了解", "hsk": "HSK3", "story": "Story 15", "pinyin": "liǎojiě", "english": "to understand; to know about"},
+  {"word": "词", "hsk": "HSK3", "story": "Story 15", "pinyin": "cí", "english": "word; term"},
+  {"word": "结束", "hsk": "HSK3", "story": "Story 15", "pinyin": "jiéshù", "english": "to end; to finish"},
+  {"word": "遇到", "hsk": "HSK3", "story": "Story 15", "pinyin": "yùdào", "english": "to encounter; to meet"},
+  {"word": "关于", "hsk": "HSK3", "story": "Story 15", "pinyin": "guānyú", "english": "about; regarding; concerning"},
+  {"word": "拿", "hsk": "HSK3", "story": "Story 15", "pinyin": "ná", "english": "to hold; to take"},
+  {"word": "成为", "hsk": "HSK4", "story": "Story 15", "pinyin": "chéngwéi", "english": "to become"},
+  {"word": "流行", "hsk": "HSK4", "story": "Story 15", "pinyin": "liúxíng", "english": "popular; fashionable; to spread"},
+  {"word": "使用", "hsk": "HSK4", "story": "Story 15", "pinyin": "shǐyòng", "english": "to use; to apply"},
+  {"word": "来自", "hsk": "HSK4", "story": "Story 15", "pinyin": "láizì", "english": "to come from"},
+  {"word": "森林", "hsk": "HSK4", "story": "Story 15", "pinyin": "sēnlín", "english": "forest"},
+  {"word": "所有", "hsk": "HSK4", "story": "Story 15", "pinyin": "suǒyǒu", "english": "all"},
+  {"word": "当地", "hsk": "HSK5", "story": "Story 15", "pinyin": "dāngdì", "english": "local"},
+  {"word": "传统", "hsk": "HSK5", "story": "Story 15", "pinyin": "chuántǒng", "english": "tradition; traditional"},
+  {"word": "属于", "hsk": "HSK5", "story": "Story 15", "pinyin": "shǔyú", "english": "to belong to"},
+  {"word": "包括", "hsk": "HSK5", "story": "Story 15", "pinyin": "bāokuò", "english": "to include; to consist of"}
+];
+
+const rawStoriesData = [
+  {
+    "id": "Story 01",
+    "title": "STORY 01 NOVEMBER\n再见，香港霓虹灯",
+    "text": "再见，香港霓虹灯\n五颜六色的霓虹灯是香港的标志，大大小小的招牌从楼房的墙面伸出来，站在街上的人们抬头几乎看不到天空。到了夜晚，霓虹灯全部点亮。你会看到一条多彩的街道。可以说，霓虹灯招牌是香港迷人的文化符号。\n霓虹灯招牌在20世纪20年代开始在香港出现，在20世纪50年代到80年代增长得很快。1970年，在弥敦道和湾仔周围，你会看到整座楼房都被霓虹灯盖住了。然而，到了今天，你会发现霓虹灯招牌正在慢慢减少，它们正在被LED灯招牌代替。香港霓虹灯招牌减少的主要原因有三个。首先是LED技术的发展，因为LED灯更省电，招牌制作更简单。也可以做出和霓虹灯一样的颜色。其次，霓虹灯的加工需要人手工制作，制作的过程比较复杂，经验丰富的人才能做得好。\n最后是安全原因。霓虹灯招牌又大又重，安装在楼房外有时会有安全问题。2008年之后，城市管理更加严格，拆除了不少霓虹灯招牌。\n香港霓虹灯招牌正在减少，但它永远是香港文化的一部分，香港的夜晚仍然会十分精彩。"
+  },
+  {
+    "id": "Story 02",
+    "title": "STORY 02 NOVEMBER\n将在250年后打开的时间胶囊",
+    "text": "将在250年后打开的时间胶囊\n2026年7 月 4 日是美国建国 250 周年的日子。这一天，美国人把一个特别的 “时间胶囊”，埋在了费城的一个公园里。\n人们把各种各样有意思的东西放进一个非常坚固的盒子里，并把这个盒子叫做“时间胶囊”。这个胶囊要到 2276 年才能打开，那时候，美国就 500 岁了。放在时间胶囊里的东西来自美国不同的州，都是一些很有意思的东西。其中最有意思的东西是一台最新的苹果手机 Apple iPhone 17，手机里还保存了一些关于今天的生活的照片和视频。还有一瓶可口可乐，还有 50 个州的州长亲手写的信。另外，还有 200 多件日常用品、体育用品。这些东西都记录着现在美国人的生活。大家希望250年后的人能看到今天的世界。苹果手机代表我们的数字生活，可口可乐是全世界都知道的美国文化符号。这些普通的小东西，就像一封寄给未来的信。\n也许有的人会很好奇：今天我们觉得很平常的东西，几百年后的人会怎么看呢？他们能从这个东西中理解我们今天的生活吗？"
+  },
+  {
+    "id": "Story 03",
+    "title": "STORY 03 NOVEMBER\n会说话会跳舞的机器鸭",
+    "text": "会说话会跳舞的机器鸭\n最近，一只叫 Microduck 的机器鸭变得特别有名。它大约 25 厘米高，只有 800 克重，但不能帮人干活。你买了这个机器鸭以后，还要花时间去“教”它怎样动起来。这只“没有用的”鸭子，为什么还会这么受欢迎呢？我们一起来了解Microduck吧。\n先说它的样子。很多机器人看起来像人一样，或者像狗。Microduck 却是一只圆头、长嘴、走路摇摆的鸭子。它走路慢、动作笨，有时还会摔倒。但是这些缺点放在鸭子身上却显得特别可爱。\n机器鸭的头上有摄像头和传感器，能看清周围；有两只脚，能走路、转左转右、坐下，摔倒后还能自己爬起来；它还能用嘴巴把东西捡起来。\n最重要的特点是，它把训练的机会交给了你。你可以让机器鸭跟着你学习动作。请放心，你既不需要会编程，也不需要太多的电脑的知识。你可以通过说话让机器鸭学习动作。你还可以把你教会它的动作上传到网上，和大家分享。\n最后说说价格。399 美元，比很多机器人便宜多了。Microduck 告诉我们：你不一定要买一个什么都会的机器人，但你可以买一个笨笨的，什么都不会的机器鸭，然后像孩子一样教育它。"
+  },
+  {
+    "id": "Story 04",
+    "title": "STORY 04 NOVEMBER\n全都是“坏人”！-香港迪士尼万圣节表演",
+    "text": "全都是“坏人”！-香港迪士尼万圣节表演\n在迪士尼故事里，不仅有漂亮的公主和英俊的王子，还有不少“坏人”，他们总是在故事里做很多坏事。想看看“坏人”们的表演吗？欢迎来到香港迪士尼公园。\n万圣节快到了，在香港迪士尼公园里表演的全都是“坏人”。你看，这是《公主与青蛙》的法西利尔博士。她穿着紫红色的衣服，戴着高高的帽子，总是说着：“一切都可以交易。”你看，《睡美人》里的玛琳菲森来了，她头上长着一只角，手里拿着长长的法杖，上面还有一只乌鸦。她常笑着说，“不要相信美好的童话，黑暗才是真实。”小时候我觉得她很可怕， 但今天看着她，我却开心地笑了。除此之外，《大力士海格力斯》的冥王、《爱丽丝梦游仙境》的红心皇后，他们的表演、衣服、动作都非常有意思。他们好像在说：“万圣节到了，终于轮到我们表演了！”\n在乐园里，你还可以开心地和那些“坏人”拍照。 原来，在迪士尼的童话世界里的“坏人”也可以为我们带来很多欢乐。"
+  },
+  {
+    "id": "Story 05",
+    "title": "STORY 05 NOVEMBER\n夏令时和冬令时的由来",
+    "text": "夏令时和冬令时的由来\n在欧洲，每年10月底的一天，人们会在半夜快到两点的时候，又把时钟调回到一点钟。正式进入冬令时。人们开玩笑地说：“冬令时让我们多睡了一个小时。”夏令时和冬令时是怎么来的呢？\n1907年，英国人维莱特建议在夏天把钟表调快，人们早就起床，多用白天的阳光。从1908年到1915年，他一共向国家提出过五次，但是很多人都不接受，特别是农民。因为农民的工作时间总是跟着太阳。家里的牛、羊、鸡只看太阳，不看钟表，它们每天的生活只跟着自然变化。如果人们把钟表调快一小时，动物吃东西、休息的时间都会变乱。\n1916年，在第一次世界大战的时候，德国为了节省能源，第一次改动钟表时间，使用夏令时。不久之后，英国也跟着这样做。战争结束后，很多国家不再改动时间。后来又经过了几次改动。直到1997年，欧洲各国定下统一规则：每年三月最后一个周日，调快钟表，进入夏令时。每年十月最后一个周日，调回原来时间，进入冬令时。这个规则一直到现在还在使用。"
+  },
+  {
+    "id": "Story 06",
+    "title": "STORY 06 NOVEMBER\n手机在偷听你吗？",
+    "text": "手机在偷听你吗？\n也许你也遇到过这样的事情。“刚刚我和我朋友说起哪种跑步的鞋子更好，手机就介绍给我了，我的手机是不是在偷听？”\n其实大多数时候，手机并没有真的在听你说话。你和朋友说起跑步的鞋子，那么很有可能你刚用手机看过鞋子。你在看视频、购物、看朋友分享的照片的时候，你的每一次停留、点赞、搜索、分享，都会有可能被记录下来。手机的后面好像有一个看不见的“数字影子”。它一直在“想”你喜欢什么。你对一种东西看得越久，“数字影子”就越觉得你喜欢；相反，如果你很快划走了，它就认为你不感兴趣。慢慢地，这个“数字影子”非常了解你爱看什么、可能会买什么、一天中几点看手机最多……甚至它比你家人更熟悉你。\n人们对“数字影子”的看法各不相同，有人认为它可以更快地让我们找到有用的信息。因为它了解你，所以它在工作和生活上给你的建议会很准确。但也有人认为“数字影子”会让我们困在自己的想法里。因为无论你是对的还是错的，只要是你常做的、常买的，它就会给你更多。让你觉得：“我是对的”。这就会让人永远生活在自己的世界里，认为这个世界外面的东西都是不好的，都是错的。"
+  },
+  {
+    "id": "Story 07",
+    "title": "STORY 07 NOVEMBER\n肯德基和百事可乐“分手”了",
+    "text": "肯德基和百事可乐“分手”了\n2026年10月15日，肯德基美国公司宣布，将结束与百事可乐大约40年的合作，从2027年1月开始，把美国大约3700家快餐店的百事可乐饮料换为可口可乐。不少人在讨论这件发生在快餐市场上的大事。和百事可乐合作了这么多年，为什么肯德基要换呢？\n有人认为，这是因为肯德基在美国的业务不太顺利。2015年，KFC在美国鸡肉快餐市场中做得很好，占市场的20% ，但到了2025年，虽然它的市场销售增加了，但它在国内的市场只占8%，KFC的业务不断地受到新竞争者的挑战。这次KFC选择可口可乐，是因为KFC想通过更强大的可口可乐，帮助自己开发一些新的饮品和新套餐，吸引更多的年轻的消费者。简单地说，肯德基最近不和百事可乐合作，不是因为百事可乐不好，而是肯德基希望让可口可乐帮助它发展市场。\n也有人认为，从管理上看，近年来可口可乐公司真的是“赢”了百事可乐。可口可乐把装瓶、运输和仓库这些事情分出来，交给其它公司管理，而总部只专心做品牌和市场。这是可口可乐成功的重要原因。"
+  },
+  {
+    "id": "Story 08",
+    "title": "STORY 08 NOVEMBER\n太空狗莱卡",
+    "text": "太空狗莱卡\n1957年11月3日，一只名叫莱卡的流浪狗被送上太空。它不知道，去太空，从一开始就没有回来的计划。\n如果莱卡会说话，它会这样和我们讲故事。我没有名字，我是一只在莫斯科街头的流浪狗，冬天很冷，我总是很饿。有一天，有一个人找到我，他摸了摸我的头，还给我吃东西。他叫我——莱卡。后来，我有了我的名字。他们让我坐在一个很小的箱子里，不要动。一开始，我觉得那是一个游戏。后来，箱子变得越来越小。我在箱子里的时间也越来越久。我不能跑，也不能转身，我不知道为什么，但我每天都努力做一个好的小狗。\n有一天，他们让我坐在一个箱子里，就跟平时练习一样。但这一次，他们把好多奇怪的东西贴在我的身上。这是今天的新游戏吗？我不明白。门关上了，我看不见他们了。接着，整个世界开始剧烈地震动。声音很大。后来，周围突然安静了，我的身体变得轻轻的，好奇怪。我不知道发生了什么。我飞起来了？我有点害怕。他们还是没有打开门。慢慢地，我觉得越来越热。我想，如果睡一觉，醒来以后，是不是就能回家了……\n那只一直相信人类会回来接它的小狗，永远留在了太空。莱卡再也没有回家。2008年，俄罗斯在莫斯科为莱卡建立了一座纪念碑。让人们记住，莱卡帮助人类进入太空。"
+  },
+  {
+    "id": "Story 09",
+    "title": "STORY 09 NOVEMBER\n达芬奇 - 不只是画家",
+    "text": "达芬奇 - 不只是画家\n1452 年，达·芬奇出生于意大利中部，他的家庭十分富有。14岁时，他进入了一个画画的学校，在这里，达芬奇学习了十年。\n在画人体时，达·芬奇和其他的画家很不同，他不仅研究人体的外面的样子，还认真地了解人体身体里面的结构。而且，他对光学、物理学、动物和植物都非常感兴趣。因为他有多个学科的知识，所以他真正地做到了“认识自然，再用画笔画出自然”。1482年，30岁的达·芬奇离开佛罗伦萨，他一个人做了多个人的工作，他是工程师，也是建筑师，同时，他也是一个画家。但是，由于他的工作太多，他真正画完的画其实没几幅，很多都是画了一半，他又跑去做其他事情了。他一直不停地观察身边的事，不停地思考。有人说，他并不是想画完一幅画，画画只是他思考的过程。1500年，他回到佛罗伦萨。他十分专心地研究数学和科学。那段时间他几乎没有画画，画的都是关于科学的草图。\n达·芬奇64岁的时候去到法国，因为得到了国王的支持，他能更专心地研究科学。1519年，达·芬奇去世时，他在国王面前说，我还没有完成我想做的事情。"
+  },
+  {
+    "id": "Story 10",
+    "title": "STORY 10 NOVEMBER\n珍珠的历史",
+    "text": "珍珠是人类最早从大自然得到的“宝贝”，因为它是圆圆的，很光滑，也有自己的光亮。所以珍珠是人们最喜欢的宝贝。珍珠有很长的历史。在西方故事中，维纳斯在贝壳里出生，当贝壳打开时，她身上落下的水珠变成了珍珠。\n其实，真正的故事是这样的：很久以前，人们在海边找贝类是为了吃里面的肉。他们打开贝壳的时候，发现里面有圆圆的、闪亮的东西，在阳光下非常好看。于是，人们认为这是上天给他们的礼物。就小心地把它放在头发里，或者衣服上，并把这些宝贝叫作“珍珠”。\n原来，珍珠的形成，是因为砂子进入贝类的身体里，贝类为了保护自己，就不断地用自己身体里的东西把砂子包住，包了一层又一层。经过3到10年，就长成了一颗圆圆的珍珠。在人工养珍珠的技术发明之前，珍珠的形成全部靠运气。\n古时候，住在海边的人们拿着篮子和长长的绳子，游到海底找贝壳，幸运的时候可以在贝壳里找到珍珠。但到海底找珍珠非常危险，因此，那时候人们得到的珍珠少极了。现在，人们通过养贝类得到珍珠，这种技术让珍珠变得越来越普遍了。价格也很便宜，普通人很容易就能买到。"
+  },
+  {
+    "id": "Story 11",
+    "title": "STORY 11 NOVEMBER\n第一个网络笑脸",
+    "text": "第一个网络笑脸\n我们用手机和朋友聊天的时候，经常会使用各种表情，这就是我们常说的网络表情包 emoji。这些表情是怎么来的呢？\n法尔曼是一位大学老师，1982年9月19日，他在学校的线上留言板上给同学们发公告。他在公告里开了一个玩笑，但他又害怕大家没搞清楚他的意思，甚至有误解。于是，他在开玩笑的文字后面加上了:-)的符号。这样，每个同学都会轻松地知道这是一个玩笑，而不会当真。下一次，当他告诉大家一件自己不喜欢的事情，法尔曼老师又担心同学们以为他在开玩笑，于是，他在句子后面加上了:-(的符号，表示他真的是生气了。就这样，同学们很清楚地从文字中明白了老师真正的心情。\n后来，这种“表情”受到了大家的欢迎。人们跟着法尔曼老师使用这两个横着的脸。这两个表情很快在网络上流传，因为人们在用电脑聊天的时候，没有看见对方的脸，有时搞不清楚说话人是生气还是开玩笑。而这两个表情能准确地表达人的心情。\n后来，网络表情越来越多，有大笑、大哭、哭笑等等。现在人们用手机或电脑聊天也经常使用表情。"
+  },
+  {
+    "id": "Story 12",
+    "title": "STORY 12 NOVEMBER\n鸟粪岛",
+    "text": "鸟粪岛\n很久以前，南美洲有一些小岛。那里住着很多海鸟。岛上有很多鸟的粪便。因为那里很少下雨，鸟粪被保护得很好，一层一层地积累，越来越高，变成了一座座“鸟粪山”。对于农民来说，这些鸟粪非常有用，把它放在地里，粮食就能长得很好。所以，鸟粪就是重要的肥料。为了得到鸟粪，一些国家还发生过战争。后来，很多人被叫去岛上挖鸟粪。那里的空气很难闻，工作也很辛苦。可是，总会有一天，鸟粪会被挖完。德国的化学家研究了新的技术，可以从空气中得到氮气，然后做成肥料。1913年，工厂开始大量做这种肥料。从此，鸟粪岛变得没那么重要了。到了今天，很多国家都能在工厂做出肥料。中国、美国、俄罗斯、印度等都有很大的工厂。有了肥料，人们就能种更多的粮食。\n从此，人们再也不用去南美洲挖鸟粪，再运送回来种粮食。这些鸟粪岛很快就被人们忘记了。人类利用科学技术，从空气中得到了面包。"
+  },
+  {
+    "id": "Story 13",
+    "title": "STORY 13 NOVEMBER\n“旅行者1号”离地球一光日",
+    "text": "“旅行者1号”离地球一光日\n2026年11月18日，“旅行者1号”飞到了一个很远的地方，那一天，它离地球一光日。如果你现在对着天空叫一声“你好”，这个信号以光的速度发过去，要走24小时，“旅行者1号”才能收到。\n49年前，“旅行者1号”从地球发射，它飞近了木星和土星，拍了许多照片，这些照片让科学家们更了解太空。因为它经过了这两颗大行星，“旅行者1号”的速度变得更快了，它飞向了更远的地方。1990年，“旅行者1号”的任务将要结束，它的相机很快就会关闭。科学家卡尔·萨根建议让“旅行者1号”最后一次回头，给地球拍一张照片。于是就有了那张著名的照片——\"淡淡的蓝点\"。在“旅行者1号”的眼睛里，地球只是太空中的一个蓝色小点。\n\"再看看那个光点，它就在这里。那是我们的家园，我们的一切。\"\n“旅行者1号”飞船上，带着一张金唱片。里面有115张图像、55种语言的问候、27首歌，还有风声雨声雷声……人类把自己的文明写进了这张金唱片，让“旅行者1号”交给了宇宙。\n“旅行者1号”带着人类的好奇心，一直飞，永远不回家。"
+  },
+  {
+    "id": "Story 14",
+    "title": "STORY 14 NOVEMBER\n徐霞客——走遍中国的山河",
+    "text": "徐霞客——走遍中国的山河\n徐霞客，中国最早徒步的人，他400年前就走遍了中国大部分地方。他出生在一个有钱人的家庭，本来他可以读书，做大官，但他却选择了旅行。他从22岁开始旅行，用了差不多30年时间，几乎全靠双脚走遍中国的山河。他的旅行不是为了看风景，而是为了记录山、水和路。\n徐霞客的旅行是有计划的，他从有名的山走到无名的山，从有人的地方走到没有人的地方，从大路走到小路，再走到没有路。他的旅行分为三个时期，一个比一个危险。开始是“看山”，去有名的山，就像旅游一样，走走看看；然后是“滨行”，他在大河和小河边上走，特别注意山和水的关系；最后是“进洞”，他进入山里的很深的洞，走到地下河。他经历过很多困难，比如，没有东西吃，迷路、受伤等等。\n最后，徐霞客写了一本书《徐霞客游记》，这本书详细地记录了中国的“山、水、路”的情况：他写得很仔细，写山，记录位置，高度；写水，记录河是从哪里开始的，它分出了多少条小河；写路，他记录这条路通到哪里，在哪里断开了，哪一段难走……等等。\n徐霞客的记录非常真实，400年前，他用行走理解世界、记录山河。"
+  },
+  {
+    "id": "Story 15",
+    "title": "STORY 15 NOVEMBER\n芭比娃娃",
+    "text": "芭比娃娃\n1959年，第一个芭比娃娃在美国“出生”了！她的创造者是Ruth Handler。当时的玩具娃娃看起来都是刚出生的孩子，Ruth在想，为什么不做一个看起来是“大人”的娃娃呢？这样孩子们在玩的时候就能“看到”长大以后的自己了。这让玩具变得更有意思了。Ruth和Mattel合作，设计出了第一个芭比娃娃。她穿着黑白条纹泳装，她的头发很好看。很多人很喜欢这个“大人”芭比娃娃。\n芭比娃娃的发展过程也很有意思。60年代，Mattel为芭比设计了各种各样的衣服，还有太阳眼镜、围巾、帽子等等。孩子们可以根据自己的想法给芭比穿不同的衣服。70年代，芭比开始“工作”了，她是医生，她是空姐，还可以是篮球运动员、糕点师等等。芭比娃娃用自己的“职业”告诉孩子们，你们长大以后也可以像我一样哦！80年代，人们开心地看到芭比娃娃有不同肤色，1997年还有坐轮椅的芭比，所有的这些设计都在告诉人们：包容与平等。2016年，芭比娃娃有各种不同的身材，有高的，有矮的，胖的瘦的……她们虽然身材不同，但都在自信的笑着。芭比告诉我们，美，可以有很多种。\n六十多年来，芭比娃娃一直在变化，但她一直站在时代的前方。你还记得以前陪你长大的那个芭比娃娃吗？"
+  }
+];
+
+// 应用状态变量
+let selectedLevel = 'HSK5'; // 默认 HSK5
+let passedWords = new Set();
+let pool = [];
+let currentWordObj = null;
+
+let showPinyinFlag = false;
+let showEnglishFlag = false;
+
+// 初始化渲染所有文章
+function renderStories() {
+    const container = document.getElementById('stories-container');
+    container.innerHTML = '';
+
+    rawStoriesData.forEach(story => {
+        const card = document.createElement('div');
+        card.className = 'story-card';
+        card.id = `story-card-${story.id.replace(/\s+/g, '')}`;
+
+        const tag = document.createElement('div');
+        tag.className = 'story-tag';
+        tag.innerText = `${story.id.toUpperCase()} NOVEMBER`;
+
+        const content = document.createElement('div');
+        content.className = 'story-content';
+        content.id = `story-content-${story.id.replace(/\s+/g, '')}`;
+        content.innerText = story.text;
+
+        card.appendChild(tag);
+        card.appendChild(content);
+        container.appendChild(card);
+    });
+}
+
+// HSK 等级筛选规则：HSK3 (只含HSK3), HSK4 (HSK3+4), HSK5 (HSK3+4+5)
+function getEligibleLevels(level) {
+    if (level === 'HSK3') return ['HSK3'];
+    if (level === 'HSK4') return ['HSK3', 'HSK4'];
+    return ['HSK3', 'HSK4', 'HSK5'];
+}
+
+// 切换 HSK 等级
+function selectHSK(level) {
+    selectedLevel = level;
+    document.querySelectorAll('.hsk-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.innerText === level);
+    });
+    rebuildPool();
+    nextWord();
+}
+
+// 重新构建抽取池
+function rebuildPool() {
+    const allowedLevels = getEligibleLevels(selectedLevel);
+    pool = vocabulary.filter(item =>
+        allowedLevels.includes(item.hsk) && !passedWords.has(item.word)
+    );
+}
+
+// 随机获取下一个词汇
+function nextWord() {
+    if (pool.length === 0) {
+        document.getElementById('target-word').innerText = "已完成";
+        document.getElementById('word-hsk').innerText = "--";
+        document.getElementById('pinyin-text').innerText = "";
+        document.getElementById('english-text').innerText = "";
+        document.getElementById('pass-checkbox').checked = false;
+        document.getElementById('remaining-count').innerText = "剩余: 0";
+        currentWordObj = null;
+        return;
+    }
+
+    const randomIndex = Math.floor(Math.random() * pool.length);
+    currentWordObj = pool[randomIndex];
+
+    document.getElementById('target-word').innerText = currentWordObj.word;
+    document.getElementById('word-hsk').innerText = currentWordObj.hsk;
+    document.getElementById('pinyin-text').innerText = currentWordObj.pinyin;
+    document.getElementById('english-text').innerText = currentWordObj.english;
+
+    document.getElementById('pass-checkbox').checked = passedWords.has(currentWordObj.word);
+    document.getElementById('remaining-count').innerText = `剩余: ${pool.length}`;
+
+    applyDisplayState();
+}
+
+// 切换汉语拼音显示
+function togglePinyin() {
+    showPinyinFlag = !showPinyinFlag;
+    applyDisplayState();
+}
+
+// 切换英文释义显示
+function toggleEnglish() {
+    showEnglishFlag = !showEnglishFlag;
+    applyDisplayState();
+}
+
+function applyDisplayState() {
+    const pinyinEl = document.getElementById('pinyin-text');
+    const englishEl = document.getElementById('english-text');
+    const pinyinBtnText = document.getElementById('pinyin-btn-text');
+    const englishBtnText = document.getElementById('english-btn-text');
+
+    if (showPinyinFlag) {
+        pinyinEl.style.visibility = 'visible';
+        pinyinBtnText.innerText = 'Hide 汉语拼音';
+    } else {
+        pinyinEl.style.visibility = 'hidden';
+        pinyinBtnText.innerText = 'Show 汉语拼音';
+    }
+
+    if (showEnglishFlag) {
+        englishEl.style.visibility = 'visible';
+        englishBtnText.innerText = 'Hide 英文';
+    } else {
+        englishEl.style.visibility = 'hidden';
+        englishBtnText.innerText = 'Show 英文';
+    }
+}
+
+// 点击 Checkbox 设置“不再测试”
+function togglePassCurrentWord() {
+    if (!currentWordObj) return;
+    const isChecked = document.getElementById('pass-checkbox').checked;
+
+    if (isChecked) {
+        passedWords.add(currentWordObj.word);
+    } else {
+        passedWords.delete(currentWordObj.word);
+    }
+
+    rebuildPool();
+    document.getElementById('remaining-count').innerText = `剩余: ${pool.length}`;
+}
+
+// 定位到原文并高亮显示句子
+function locateInText() {
+    if (!currentWordObj) return;
+
+    const targetStoryId = currentWordObj.story;
+    const targetWord = currentWordObj.word;
+
+    const storyObj = rawStoriesData.find(s => s.id === targetStoryId);
+    if (!storyObj) return;
+
+    const cardId = `story-card-${targetStoryId.replace(/\s+/g, '')}`;
+    const contentId = `story-content-${targetStoryId.replace(/\s+/g, '')}`;
+
+    const storyCard = document.getElementById(cardId);
+    const storyContent = document.getElementById(contentId);
+
+    // 还原所有文章内容（取消先前的高亮）
+    rawStoriesData.forEach(s => {
+        const cId = `story-content-${s.id.replace(/\s+/g, '')}`;
+        document.getElementById(cId).innerText = s.text;
+    });
+
+    const fullText = storyObj.text;
+    const sentences = fullText.match(/[^。！？!?\n]+[。！？!?\n]?|\n/g) || [fullText];
+
+    let highlightedHTML = "";
+    let matched = false;
+
+    sentences.forEach(sentence => {
+        if (!matched && sentence.includes(targetWord)) {
+            highlightedHTML += `<span class="sentence-highlight">${escapeHtml(sentence)}</span>`;
+            matched = true;
+        } else {
+            highlightedHTML += escapeHtml(sentence);
+        }
+    });
+
+    storyContent.innerHTML = highlightedHTML;
+    storyCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+// 辅助 HTML 转义函数
+function escapeHtml(text) {
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+// 恢复初始状态
+function resetAll() {
+    passedWords.clear();
+    showPinyinFlag = false;
+    showEnglishFlag = false;
+    selectedLevel = 'HSK5';
+
+    document.querySelectorAll('.hsk-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.innerText === 'HSK5');
+    });
+
+    renderStories();
+    rebuildPool();
+    nextWord();
+}
+
+// 页面加载完成后自动初始化
+window.onload = function() {
+    renderStories();
+    rebuildPool();
+    nextWord();
+};
+</script>
+
+</body>
+</html>
